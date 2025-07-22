@@ -3,8 +3,8 @@
 ## 1. Clone the repo
 
 ```bash
-git clone https://github.com/yourusername/yourproject.git
-cd yourproject
+git clone https://github.com/Togev/dungeon-finder.git
+cd dungeon-finder
 ```
 
 ## 2. Create virtual environment and install dependencies
