@@ -1,0 +1,61 @@
+{% extends 'common/base.html' %}
+{% block title %}Apply to Ad | DungeonFinder{% endblock %}
+
+{% block content %}
+<section class="ad-create-section">
+    <div class="ad-block ad-create-block">
+        <h1 class="ad-create-title">Apply to This Ad</h1>
+        <div class="ad-header">
+            <div>
+                <h2>{{ ad.title }}</h2>
+                <div class="ad-meta">
+                    <span>{{ ad.game_system }}</span>
+                    <span class="ad-header-divider" id="application_divider"></span>
+                    <span>{{ ad.session_frequency }}</span>
+                    <span class="ad-header-divider" id="application_divider"></span>
+                    <span>{{ ad.location_type }}</span>
+                </div>
+            </div>
+            <div class="ad-creator-profile">
+                <span class="ad-creator-name">
+                    By {{ ad.owner.username }}
+                </span>
+                <a href="{% url 'account_details' ad.owner.pk %}" class="btn btn-primary" id="details-view-btn">
+                    View Profile
+                </a>
+            </div>
+        </div>
+        <form method="post" class="ad-create-form">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-row">
+                <label for="{{ form.role.id_for_label }}">{{ form.role.label }}</label>
+                {{ form.role }}
+                {% if form.role.errors %}
+                    <div class="form-errors">{{ form.role.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-row">
+                <label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
+                {{ form.message }}
+                {% if form.message.errors %}
+                    <div class="form-errors">{{ form.message.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="application-reminder">
+                <span>
+                    <strong>Reminder:</strong> Once submitted, your application cannot be edited.
+                </span>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-large">Submit Application</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

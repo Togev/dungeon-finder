@@ -1,0 +1,289 @@
+.ad-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch; /* <-- Stretch children to equal height */
+    gap: 2em;
+    margin-bottom: 2em;
+    max-width: 1400px; /* wider block */
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.ad-list {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.7em;
+    align-items: stretch;
+    overflow: hidden;
+}
+.ad-block {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--background);
+    border-radius: 6px;
+    padding: 1.5em 2em;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.ad-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.ad-header h2 {
+    color: var(--primary-accent);
+    margin: 0;
+    font-size: 1.35em;
+}
+
+.ad-date {
+    color: #b9b1a2;
+    font-size: 0.95em;
+}
+
+.ad-meta {
+    margin: 0.7em 0 0.7em 0;
+    font-size: 1.03em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.ad-tags {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+}
+
+.tag-chip {
+    background: var(--secondary-accent);
+    color: #fff;
+    border-radius: 3px;
+    padding: 2px 8px;
+    font-size: 0.95em;
+    margin-right: 3px;
+    display: inline-block;
+}
+
+.ad-description {
+    margin-bottom: 0.9em;
+    word-break: break-word;      /* ensures long words or URLs wrap */
+    overflow-wrap: anywhere;     /* wraps at any point if needed */
+    max-width: 100%;
+    color: #b9b1a2;
+    line-height: 1.5;
+}
+
+.ad-actions {
+    margin-top: 0.4em;
+}
+
+.search-bar {
+    flex: 1 1 0;
+    margin-bottom: 2em;
+    display: flex;
+    gap: 1em;
+    align-items: stretch; /* <-- Children match height */
+}
+
+.search-bar input[type="text"] {
+    flex: 1 1 0;
+    min-width: 50%;
+    padding: 0.7em;
+    border-radius: 5px;
+    border: none;
+    max-width: 700px;
+    display: flex;
+    gap: 1em;
+    align-items: stretch;
+    font-size: 1em;
+    background: #ffffff;
+    color: var(--text-dark);
+    height: 40px; /* <-- Match button height */
+    box-sizing: border-box;
+}
+
+.visually-hidden {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.pagination {
+    margin-top: 2em;
+    text-align: center;
+    font-size: 1.05em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.pagination a {
+    color: var(--secondary-accent);
+    text-decoration: none;
+    padding: 0.25em 0.8em;
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
+    background: var(--card-bg);
+}
+
+.pagination a:hover {
+    color: var(--primary-accent);
+    background: var(--background);
+}
+
+.pagination span {
+    color: #b9b1a2;
+}
+
+.search-bar button.btn,
+.ad-list-header a.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1.3em;
+    border-radius: 5px;
+    border: none;
+    font-weight: 600;
+    font-size: 1em;
+    height: 40px;    /* <-- Fixed height for both buttons */
+    min-width: 120px;
+    box-sizing: border-box;
+}
+
+.search-bar button.btn {
+    vertical-align: middle;
+    margin: 0;
+}
+
+.ad-header-divider {
+    display: inline-block;
+    width: 2px;
+    height: 40px;
+    background: #b9b1a2;
+    /*margin: 0 1em;*/
+    border-radius: 2px;
+    flex: 0 0 2px;
+    margin: 0 1em;
+}
+
+
+#details-view-btn {
+    padding: 0.5em 1.3em;
+    border-radius: 5px;
+    border: none;
+    background: var(--primary-accent);
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s, color 0.2s;
+}
+
+#details-view-btn:hover {
+    background: var(--secondary-accent);
+    color: #fff;
+}
+
+.ad-create-section {
+    max-width: 900px;
+    margin: 3em auto 0 auto;
+    padding: 0 2em;
+}
+
+.ad-create-block {
+    margin-top: 0;
+    padding: 2em 2.5em;
+}
+
+.ad-create-title {
+    color: var(--primary-accent);
+    font-size: 2em;
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+.ad-create-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3em;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.form-row label {
+    font-weight: 500;
+    color: var(--secondary-accent);
+    font-size: 1.08em;
+    margin-bottom: 0.3em;
+}
+
+.form-row input,
+.form-row textarea,
+.form-row select {
+    background: var(--card-bg);
+    color: var(--text-light);
+    border: 1px solid #64542f;
+    border-radius: 4px;
+    padding: 0.7em 1em;
+    font-size: 1em;
+    resize: vertical;
+    width: 100%;
+    box-sizing: border-box;
+
+}
+
+.form-row textarea {
+    resize: none;
+    height: 7em;
+}
+
+.form-row input[type="checkbox"] {
+    width: auto;
+    margin-right: 0.5em;
+    accent-color: var(--primary-accent);
+}
+
+.form-row input:focus,
+.form-row textarea:focus,
+.form-row select:focus {
+    outline: none;
+    border-color: var(--primary-accent);
+}
+
+.form-errors {
+    color: var(--primary-accent);
+    font-size: 1em;
+    margin-top: 0.3em;
+    font-weight: 600;
+}
+
+.form-actions {
+    margin-top: 1.5em;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-large {
+    font-size: 1.15em;
+    padding: 0.7em 2.5em;
+    border-radius: 5px;
+    font-weight: 600;
+}
+

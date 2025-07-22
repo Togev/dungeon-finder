@@ -1,0 +1,64 @@
+.ad-view-section {
+    max-width: 900px;
+    margin: 3em auto 0 auto;
+    padding: 0 2em;
+}
+
+.ad-view-block {
+    margin-top: 0;
+    padding: 2em 2.5em;
+}
+
+.ad-view-block h1 {
+    color: var(--primary-accent);
+    font-size: 2em;
+    margin-bottom: 0.3em;
+}
+
+.ad-view-block .ad-meta {
+    margin: 1em 0 1.3em 0;
+    font-size: 1.08em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.ad-view-block .ad-description {
+    color: #b9b1a2;
+    line-height: 1.5;
+    margin-bottom: 1.7em;
+}
+
+.ad-actions {
+    margin-top: 2em;
+    display: flex;
+    gap: 1em;
+    justify-content: flex-end;
+}
+
+.btn-danger {
+    background: var(--primary-accent);
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: var(--secondary-accent);
+    color: #fff;
+}
+
+.delete-description {
+    color: var(--primary-accent);
+    font-weight:600;
+    margin-bottom:1.1em;
+}
+
+#delete-ad-btn {
+    padding: 0.5em 1.3em;
+    border-radius: 5px;
+    border: none;
+    background: var(--text-light);
+    color: #333333;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s, color 0.2s;
+}

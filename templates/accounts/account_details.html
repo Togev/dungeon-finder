@@ -1,0 +1,49 @@
+{% extends "common/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="profile-details-container">
+    <div class="profile-details-card">
+        <div class="profile-picture-wrapper">
+            <img src="{{ profile_user.profile.profile_pic.url }}" alt="Profile Picture" class="profile-picture">
+        </div>
+        <div class="profile-info">
+            <h2 class="profile-username">
+                {{ profile_user.username }}, {{ profile_user.age }}
+            </h2>
+            {% if profile.show_names %}
+            <p class="profile-names">
+                {{ profile_user.first_name }} {{ profile_user.last_name }}
+            </p>
+            {% endif %}
+            <p class="profile-email">
+                <span>Email:</span> {{ profile_user.email }}
+            </p>
+            <div class="profile-extra-info">
+                {% if profile_user.profile.phone_number %}
+                    <p class="profile-phone">
+                        <span>Phone:</span> {{ profile_user.profile.phone_number }}
+                    </p>
+                {% endif %}
+                {% if profile_user.profile.address %}
+                    <p class="profile-address">
+                        <span>Address:</span> {{ profile_user.profile.address }}
+                    </p>
+                {% endif %}
+                {% if profile_user.profile.about_me %}
+                    <div class="profile-about">
+                        <span>About Me:</span>
+                        <div class="profile-about-text">{{ profile_user.profile.about_me }}</div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% if is_owner %}
+        <div class="profile-actions">
+            <a href="{% url 'account_edit' request.user.pk %}" class="btn btn-primary">Edit Profile</a>
+            <a href="{% url 'account_delete' pk=request.user.pk %}" class="btn btn-secondary">Delete Account</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

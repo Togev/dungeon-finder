@@ -1,0 +1,118 @@
+{% extends 'common/base.html' %}
+{% block title %}Edit Ad | DungeonFinder{% endblock %}
+
+{% block content %}
+<section class="ad-create-section">
+    <div class="ad-block ad-create-block">
+        <h1 class="ad-create-title">Edit Ad</h1>
+        <form method="post" class="ad-create-form">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+        
+            <div class="form-row">
+                <label for="{{ form.title.id_for_label }}">Title</label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <div class="form-errors">{{ form.title.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-row">
+                <label for="{{ form.description.id_for_label }}">Description</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <div class="form-errors">{{ form.description.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-row">
+                <label>
+                    {{ form.looking_for_dm }} Looking for DM
+                </label>
+                <label>
+                    {{ form.looking_for_players }} Looking for players
+                </label>
+                {% if form.looking_for_dm.errors %}
+                    <div class="form-errors">{{ form.looking_for_dm.errors }}</div>
+                {% endif %}
+                {% if form.looking_for_players.errors %}
+                    <div class="form-errors">{{ form.looking_for_players.errors }}</div>
+                {% endif %}
+            </div>
+        
+            <div class="form-row" id="num-players-row">
+                <label for="{{ form.num_players.id_for_label }}">Number of players wanted</label>
+                {{ form.num_players }}
+                {% if form.num_players.errors %}
+                    <div class="form-errors">{{ form.num_players.errors }}</div>
+                {% endif %}
+            </div>
+        
+            <div class="form-row">
+                <label for="{{ form.game_system.id_for_label }}">Game System</label>
+                {{ form.game_system }}
+                {% if form.game_system.errors %}
+                    <div class="form-errors">{{ form.game_system.errors }}</div>
+                {% endif %}
+            </div>
+        
+            <div class="form-row">
+                <label for="{{ form.session_frequency.id_for_label }}">Session Frequency</label>
+                {{ form.session_frequency }}
+                {% if form.session_frequency.errors %}
+                    <div class="form-errors">{{ form.session_frequency.errors }}</div>
+                {% endif %}
+            </div>
+        
+            <div class="form-row">
+                <label for="{{ form.location_type.id_for_label }}">Location Type</label>
+                {{ form.location_type }}
+                {% if form.location_type.errors %}
+                    <div class="form-errors">{{ form.location_type.errors }}</div>
+                {% endif %}
+            </div>
+        
+            <div class="form-row">
+                <label for="{{ form.location_details.id_for_label }}">Location Details</label>
+                {{ form.location_details }}
+                {% if form.location_details.errors %}
+                    <div class="form-errors">{{ form.location_details.errors }}</div>
+                {% endif %}
+            </div>
+        
+            <div class="form-row">
+                <label for="{{ form.tags.id_for_label }}">Tags</label>
+                {{ form.tags }}
+                {% if form.tags.errors %}
+                    <div class="form-errors">{{ form.tags.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-large">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</section>
+    
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const lookingForPlayersCheckbox = document.getElementById('id_looking_for_players');
+    const numPlayersRow = document.getElementById('num-players-row');
+
+    function toggleNumPlayers() {
+        if (lookingForPlayersCheckbox.checked) {
+            numPlayersRow.style.display = '';
+        } else {
+            numPlayersRow.style.display = 'none';
+        }
+    }
+    toggleNumPlayers();
+    lookingForPlayersCheckbox.addEventListener('change', toggleNumPlayers);
+});
+</script>
+{% endblock %}

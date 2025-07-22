@@ -1,0 +1,60 @@
+{% extends 'common/base.html' %}
+{% block title %}{{ ad.title }} | DungeonFinder{% endblock %}
+
+{% block content %}
+<section class="ad-view-section">
+    <div class="ad-block ad-view-block">
+        <div class="ad-header">
+            <h1>{{ ad.title }}</h1>
+            <span class="ad-date">{{ ad.created|date:"M d, Y" }}</span>
+        </div>
+        <div class="ad-meta">
+            <span class="ad-creator"><strong>Creator:</strong> {{ ad.owner.username }}</span>
+            {% if ad.tags.exists %}
+                <span class="ad-tags">
+                    <strong>Tags:</strong>
+                    {% for tag in ad.tags.all %}
+                        <span class="tag-chip">{{ tag.name }}</span>
+                    {% endfor %}
+                </span>
+            {% endif %}
+            {% if ad.location_type %}
+                <span class="ad-location"><strong>Location:</strong> {{ ad.location_type }}</span>
+            {% endif %}
+            {% if ad.location_details %}
+                <span class="ad-location-details"><strong>Details:</strong> {{ ad.location_details }}</span>
+            {% endif %}
+            {% if ad.game_system %}
+                <span class="ad-game-system"><strong>Game System:</strong> {{ ad.game_system }}</span>
+            {% endif %}
+            {% if ad.session_frequency %}
+                <span class="ad-session-frequency"><strong>Session Frequency:</strong> {{ ad.session_frequency }}</span>
+            {% endif %}
+            {% if ad.looking_for_players %}
+                <span class="ad-lfp"><strong>Looking for players:</strong> Yes</span>
+            {% endif %}
+            {% if ad.looking_for_dm %}
+                <span class="ad-lfdm"><strong>Looking for DM:</strong> Yes</span>
+            {% endif %}
+            {% if ad.num_players %}
+                <span class="ad-num-players"><strong>Players wanted:</strong> {{ ad.num_players }}</span>
+            {% endif %}
+        </div>
+        <div class="ad-description">
+            {{ ad.description|linebreaks }}
+        </div>
+        <div class="ad-actions">
+            {% if user == ad.owner %}
+                <a href="{% url 'ad_edit' ad.pk %}" class="btn btn-primary" id="details-view-btn">Edit Ad</a>
+                <a href="{% url 'ad_delete' ad.pk %}" class="btn btn-primary" id="delete-ad-btn">Delete Ad</a>
+            {% else %}
+                {% if user_application %}
+                    <a href="{% url 'application_details' user_application.pk %}" class="btn btn-primary" id="details-view-btn">View Application</a>
+                {% else %}
+                    <a href="{% url 'application_form' ad.pk %}" class="btn btn-primary" id="details-view-btn">Apply</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

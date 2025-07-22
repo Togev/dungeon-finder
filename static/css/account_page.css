@@ -1,0 +1,217 @@
+.profile-details-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    min-height: 60vh;
+}
+
+.profile-details-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    padding: 2.5em 2em 2em 2em;
+    border: 1px solid var(--header-footer-bg-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 350px;
+    max-width: 450px;
+    margin: 2em; /* equal top & side margin */
+}
+
+.profile-picture-wrapper {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 1.2em;
+    border: 2px solid var(--header-footer-border);
+    background: var(--background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
+
+/* Group for always-present info (username, names, email) */
+.profile-main-info {
+    /*text-align: center;*/
+    margin-bottom: 0.5em;
+    width: 100%;
+}
+
+.profile-username {
+    font-size: 2em;
+    font-weight: 700;
+    color: var(--primary-accent);
+    margin: 0.1em 0 0.1em 0;
+    word-break: break-all;
+}
+
+/* Names & email closer to username */
+.profile-names {
+    font-size: 1.1em;
+    color: #c1b9a5;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+.profile-email {
+    font-size: 1em;
+    color: var(--text-light);
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+.profile-email span {
+    color: var(--secondary-accent);
+    font-weight: 500;
+    margin-right: 0.3em;
+}
+
+/* Group for extra profile info */
+.profile-extra-info > p,
+.profile-extra-info > div {
+    margin: 0.3em 0;
+}
+
+.profile-phone,
+.profile-address {
+    font-size: 1em;
+    color: var(--text-light);
+    margin: 0.2em 0;
+}
+
+.profile-phone span,
+.profile-address span {
+    color: var(--secondary-accent);
+    font-weight: 500;
+    margin-right: 0.3em;
+}
+
+/* About Me section styling */
+.profile-about {
+    margin-top: 0.7em;
+    text-align: left;
+    width: 100%;
+}
+
+.profile-section-title {
+    text-align: center;
+}
+
+.profile-about span {
+    color: var(--secondary-accent);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.2em;
+}
+
+.profile-about-text {
+    color: var(--text-light);
+    background: rgba(0,0,0,0.06);
+    padding: 0.6em 1em;
+    border-radius: 6px;
+    font-size: 1em;
+    white-space: pre-line;
+    word-break: break-word;
+    margin-bottom: 0.2em;
+}
+
+.profile-actions {
+    margin-top: 1.1em;
+    display: flex;
+    flex-direction: row;
+    gap: 0.8em;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-actions .btn {
+    border-radius: 5px;
+    min-width: 120px;
+    text-align: center;
+    padding: 0.6em 1.3em;
+    font-weight: 600;
+    display: inline-block;
+    vertical-align: middle;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+/* Delete button: strong red, hover dark red */
+.btn-danger, .btn-delete {
+    background: #e53935;
+    color: #fff;
+    border: none;
+}
+.btn-danger:hover, .btn-danger:focus,
+.btn-delete:hover, .btn-delete:focus {
+    background: #b71c1c;
+    color: #fff;
+}
+
+/* Cancel button: light gray, dark text */
+.btn-secondary {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ccc;
+}
+.btn-secondary:hover, .btn-secondary:focus {
+    background: #e0e0e0;
+    color: #1976d2;
+    border-color: #90caf9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .profile-details-card {
+        min-width: unset;
+        max-width: 98vw;
+        padding: 1.2em 0.5em 1em 0.5em;
+        margin: 1em;
+    }
+    .profile-picture-wrapper {
+        width: 110px;
+        height: 110px;
+    }
+    .profile-picture {
+        width: 110px;
+        height: 110px;
+    }
+    .profile-about-text {
+        padding: 0.3em 0.6em;
+        font-size: 0.95em;
+    }
+}
+
+.profile-section-title {
+    font-size: 1.14em;
+    font-weight: 600;
+    color: var(--secondary-accent);
+    margin-bottom: 0.5em;
+}
+
+.profile-edit-form fieldset {
+    border: none;
+    padding: 0;
+    margin-bottom: 1.3em;
+}
+
+.profile-edit-form fieldset:last-child {
+    margin-bottom: 0;
+}
+
+.profile-actions button.btn {
+    vertical-align: middle;
+    margin: 0;
+}

@@ -1,0 +1,63 @@
+{% extends 'common/base.html' %}
+{% block title %}Find a Group | DungeonFinder{% endblock %}
+
+{% block content %}
+<div class="ad-list-header">
+    <form method="get" class="search-bar">
+        <label for="search-q" class="visually-hidden">Search ads</label>
+        <input type="text" id="search-q" name="q" placeholder="Search by title, tags, location..." value="{{ request.GET.q }}">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <span class="ad-header-divider"></span>
+    <a href="{% url 'ad_create' %}" class="btn btn-primary">+ Create Ad</a>
+</div>
+
+<section class="ad-list">
+    {% for ad in page_obj %}
+        <div class="ad-block">
+            <div class="ad-header">
+                <h2>{{ ad.title }}</h2>
+                <span class="ad-date">{{ ad.created|date:"M d, Y" }}</span>
+            </div>
+            <div class="ad-meta">
+                <span class="ad-creator"><strong>Creator:</strong> {{ ad.owner.username }}</span>
+                {% if ad.tags.exists %}
+                    <span class="ad-tags">
+                        <strong>Tags:</strong>
+                        {% for tag in ad.tags.all %}
+                            <span class="tag-chip">{{ tag.name }}</span>
+                        {% endfor %}
+                    </span>
+                {% endif %}
+                {% if ad.location_type %}
+                    <span class="ad-location"><strong>Location:</strong> {{ ad.location_type }}</span>
+                {% endif %}
+            </div>
+            <div class="ad-description">
+                {{ ad.description|truncatechars:220 }}
+            </div>
+            <div class="ad-actions">
+                <a href="{% url 'ad_details' ad.pk %}" class="btn btn-primary" id="details-view-btn">View Details</a>
+            </div>
+        </div>
+    {% empty %}
+        <div class="ad-block">
+            <p style="color: #b9b1a2; text-align: center;">No ads found.</p>
+        </div>
+    {% endfor %}
+</section>
+
+<div class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="?{{ request.GET.urlencode }}&page=1">&laquo; First</a>
+        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+    {% if page_obj.has_next %}
+        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}">Next</a>
+        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+    {% endif %}
+</div>
+{% endblock %}
