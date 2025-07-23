@@ -14,27 +14,42 @@ from .forms import CreateAdForm, EditAdForm
 class CreateAdView(LoginRequiredMixin, CreateView):
     model = Ad
     form_class = CreateAdForm
-    template_name = 'ads/create_ad.html'  # This is the template you'll create in ads/templates/ads/ad_form.html
-    success_url = reverse_lazy('landing_page')  # Update this to your ad listing url name
+    template_name = 'ads/create_ad.html'
+    success_url = reverse_lazy('landing_page')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
-        # Set the owner to the logged-in user
         form.instance.owner = self.request.user
-        response = super().form_valid(form)
 
-        if form.cleaned_data.get('create_table'):
-            Table.objects.create(
-                name=f"Table for {self.object.title}",
-                created_by=self.request.user,  # adjust if you use user or profile
-                ad=self.object,
+        table = form.cleaned_data['table']
+        new_name = form.cleaned_data.get('new_table_name')
+        new_desc = form.cleaned_data.get('new_table_description')
+
+        if table == '__new__':
+            # Safe to assume both name and description are valid due to form validation
+            table = Table.objects.create(
+                name=new_name,
+                description=new_desc,
+                created_by=self.request.user
             )
-        return response
 
+        form.instance.table = table  # Either the new one or existing instance
+
+        return super().form_valid(form)
 
 class EditAdView(LoginRequiredMixin, UpdateView):
     model = Ad
     form_class = EditAdForm  # Or CreateAdForm if they're identical
     template_name = 'ads/edit_ad.html'  # Reuse the same form template
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def get_success_url(self):
         return reverse_lazy('ad_details', args=[self.object.pk])
@@ -68,7 +83,7 @@ class AdDeleteView(LoginRequiredMixin, DeleteView):
 
 class MyAdsListView(LoginRequiredMixin, ListView):
     model = Ad
-    template_name = 'ads/ad_list.html'
+    template_name = 'ads/my_ads.html'
     paginate_by = 5
 
     def get_queryset(self):

@@ -38,7 +38,8 @@ PROJECT_APPS = [
     'ads',
     'table_messages',
     'table_groups',
-    'ad_applications'
+    'ad_applications',
+    'invitations',
 ]
 
 INSTALLED_APPS = [
