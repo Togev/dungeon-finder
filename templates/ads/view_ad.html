@@ -30,11 +30,11 @@
             {% if ad.session_frequency %}
                 <span class="ad-session-frequency"><strong>Session Frequency:</strong> {{ ad.session_frequency }}</span>
             {% endif %}
-            {% if ad.looking_for_players %}
-                <span class="ad-lfp"><strong>Looking for players:</strong> Yes</span>
-            {% endif %}
             {% if ad.looking_for_dm %}
                 <span class="ad-lfdm"><strong>Looking for DM:</strong> Yes</span>
+            {% endif %}
+            {% if ad.looking_for_players %}
+                <span class="ad-lfp"><strong>Looking for players:</strong> Yes</span>
             {% endif %}
             {% if ad.num_players %}
                 <span class="ad-num-players"><strong>Players wanted:</strong> {{ ad.num_players }}</span>

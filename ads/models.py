@@ -6,19 +6,18 @@ class Ad(models.Model):
     LOCATION_CHOICES = [
         ('Online', 'Online'),
         ('In Person', 'In Person'),
-        # add more as needed
     ]
     SESSION_FREQUENCY_CHOICES = [
         ('Weekly', 'Weekly'),
         ('Biweekly', 'Biweekly'),
         ('Monthly', 'Monthly'),
-        ('One-shot', 'One-shot'),
+        ('One shot', 'One-shot'),
         ('Infrequent', 'Infrequent'),
-        # add more as needed
     ]
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='ads')
     title = models.CharField(max_length=255, blank=True)
+    table = models.OneToOneField('table_groups.Table', on_delete=models.CASCADE, related_name='ad')
     description = models.TextField()
     looking_for_players = models.BooleanField(default=False)
     looking_for_dm = models.BooleanField(default=False)

@@ -27,6 +27,7 @@ urlpatterns = [
 
     path('ads/', include('ads.urls')),
     path('applications/', include('ad_applications.urls')),
+    path('invitations/', include('invitations.urls')),
 ]
 
 if settings.DEBUG:

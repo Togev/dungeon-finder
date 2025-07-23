@@ -20,13 +20,7 @@ class Table(models.Model):
         settings.AUTH_USER_MODEL,
         related_name='admin_tables'
     )
-    ad = models.ForeignKey(
-        'ads.Ad',
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='tables'
-    )
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

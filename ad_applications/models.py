@@ -1,14 +1,14 @@
 from django.db import models
 
-from DungeonFinder import settings
+from django.conf import settings
 
 
 # Create your models here.
 class Application(models.Model):
     ROLE_CHOICES = [
-        ('DM', 'Dungeon Master'),
-        ('Player', 'Player'),
-        ('Both', 'Both'),
+        ('dm', 'Dungeon Master'),
+        ('player', 'Player'),
+        ('both', 'Both'),
     ]
     STATUS_CHOICES = [
         ('pending', 'Pending'),

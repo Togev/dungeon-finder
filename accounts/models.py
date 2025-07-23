@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinLengthValidator, MinValueValidator
 
-from DungeonFinder import settings
+from django.conf import settings
 from accounts.validators import UsernameAlphaNumericUnderscoreValidator
 from django.db import models
 
@@ -28,7 +28,6 @@ class CustomUser(AbstractUser):
         return self.username
 
 def user_profile_pic_path(instance, filename):
-    # Save to /media/profile_pics/<user_pk>/<filename>
     return f"profile_pics/{instance.user.pk}/{filename}"
 
 class Profile(models.Model):

@@ -85,13 +85,42 @@
                     <div class="form-errors">{{ form.tags.errors }}</div>
                 {% endif %}
             </div>
+
             <div class="form-row">
-                <label>
-                    {{ form.create_table }} Create a table for this ad
-                </label>
-                {% if form.create_table.errors %}
-                    <div class="form-errors">{{ form.create_table.errors }}</div>
+                <label for="id_table_select">Choose table:</label>
+                <select name="table" id="id_table_select">
+                    <option value="" disabled {% if not form.table.value %}selected{% endif %}>-- Choose an option --</option>
+                        {% for option in form.table.field.queryset %}
+                            <option value="{{ option.pk }}"
+                                {% if form.table.value|stringformat:"s" == option.pk|stringformat:"s" %}selected{% endif %}>
+                                {{ option }}
+                            </option>
+                        {% endfor %}
+                    <option value="__new__"
+                        {% if form.table.value == "__new__" %}selected{% endif %}>
+                        Create new table
+                    </option>
+                </select>
+                {% if form.table.errors %}
+                    <div class="form-errors">{{ form.table.errors }}</div>
                 {% endif %}
+            </div>
+
+            <div id="new-table-fields" style="display:none;">
+                <div class="form-row">
+                    <label for="{{ form.new_table_name.id_for_label }}">New Table Group Name</label>
+                    {{ form.new_table_name }}
+                    {% if form.new_table_name.errors %}
+                        <div class="form-errors">{{ form.new_table_name.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-row">
+                    <label for="{{ form.new_table_description.id_for_label }}">New Table Group Description</label>
+                    {{ form.new_table_description }}
+                    {% if form.new_table_description.errors %}
+                        <div class="form-errors">{{ form.new_table_description.errors }}</div>
+                    {% endif %}
+                </div>
             </div>
 
             <div class="form-actions">
@@ -102,22 +131,39 @@
 </section>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-    const lookingForPlayersCheckbox = document.getElementById('id_looking_for_players');
-    const numPlayersRow = document.getElementById('num-players-row');
-
-    function toggleNumPlayers() {
-        if (lookingForPlayersCheckbox.checked) {
-            numPlayersRow.style.display = '';
-        } else {
-            numPlayersRow.style.display = 'none';
+        // Show/hide num_players row
+        const lookingForPlayersCheckbox = document.getElementById('id_looking_for_players');
+        const numPlayersRow = document.getElementById('num-players-row');
+        function toggleNumPlayers() {
+            if (lookingForPlayersCheckbox && numPlayersRow) {
+                if (lookingForPlayersCheckbox.checked) {
+                    numPlayersRow.style.display = '';
+                } else {
+                    numPlayersRow.style.display = 'none';
+                }
+            }
         }
-    }
+        toggleNumPlayers();
+        if (lookingForPlayersCheckbox) {
+            lookingForPlayersCheckbox.addEventListener('change', toggleNumPlayers);
+        }
 
-    // Initial state
-    toggleNumPlayers();
-
-    // Listen for changes
-    lookingForPlayersCheckbox.addEventListener('change', toggleNumPlayers);
-});
+        // Table group new/create logic
+        const tableSelect = document.getElementById('id_table_select');
+        const newTableFields = document.getElementById('new-table-fields');
+        function toggleNewTableFields() {
+            if (tableSelect) {
+                if (tableSelect.value === '__new__') {
+                    newTableFields.style.display = '';
+                } else {
+                    newTableFields.style.display = 'none';
+                }
+            }
+        }
+        toggleNewTableFields();
+        if (tableSelect) {
+            tableSelect.addEventListener('change', toggleNewTableFields);
+        }
+    });
 </script>
 {% endblock %}

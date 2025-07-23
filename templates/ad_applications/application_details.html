@@ -29,7 +29,7 @@
                 {% if application.status == 'pending' %}
                     <form method="post" action="{% url 'application_accept' application.pk %}">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-primary">Accept</button>
+                        <button type="submit" class="btn btn-primary">Accept & Send Invitation</button>
                     </form>
                     <form method="post" action="{% url 'application_reject' application.pk %}">
                         {% csrf_token %}
@@ -37,6 +37,19 @@
                     </form>
                 {% else %}
                     <span>Status: {{ application.get_status_display }}</span>
+                {% endif %}
+            {% endif %}
+
+            {# SEND INVITATION - Only for ad owner, if no invitation exists #}
+            {% if user == application.ad.owner %}
+                {% if invitation %}
+{#                    <form method="post" action="{% url 'send_invitation' application.ad.id application.id %}">#}
+{#                        {% csrf_token %}#}
+{#                        <button type="submit" class="btn btn-success">Send Invitation</button>#}
+{#                    </form>#}
+                    <span>
+                        Invitation status: {{ invitation.status|capfirst }}
+                    </span>
                 {% endif %}
             {% endif %}
         </div>
