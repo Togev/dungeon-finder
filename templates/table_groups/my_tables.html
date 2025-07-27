@@ -1,0 +1,59 @@
+{% extends 'common/base.html' %}
+{% load dict_get %}
+{% block title %}My Tables | DungeonFinder{% endblock %}
+
+{% block content %}
+<div class="create-table-option">
+    <a href="{% url 'create_table' %}" id="details-view-btn">Create New Table</a>
+</div>
+<section class="ad-list table-list">
+    {% for table in page_obj %}
+        <div class="ad-block table-block">
+            <div class="ad-header table-header">
+                <h2>{{ table.name }}</h2>
+                <span class="ad-date table-date">{{ table.created_at|date:"M d, Y" }}</span>
+            </div>
+            {% if table.members.count or role_map|dict_get:table.pk %}
+              <div class="ad-meta table-meta">
+                  {% if table.members.count %}
+                    <span class="table-members">
+                        <strong>Members:</strong> {{ table.members.count }}
+                    </span>
+                  {% endif %}
+                  {% if role_map|dict_get:table.pk %}
+                    <span class="table-role">
+                        <strong>My Role:</strong> {{ role_map|dict_get:table.pk }}
+                    </span>
+                  {% endif %}
+              </div>
+            {% endif %}
+            {% if table.announcement %}
+              <div class="ad-description table-announcement">
+                  {{ table.announcement|truncatechars:220 }}
+              </div>
+            {% endif %}
+            <div class="ad-actions table-actions">
+                <a href="{% url 'table_details' table.pk %}" class="btn btn-primary" id="details-view-btn">View Details</a>
+            </div>
+        </div>
+    {% empty %}
+        <div class="ad-block table-block">
+            <p style="color: #b9b1a2; text-align: center;">You are not a member of any tables yet.</p>
+        </div>
+    {% endfor %}
+</section>
+
+<div class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; First</a>
+        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+    {% endif %}
+</div>
+{% endblock %}

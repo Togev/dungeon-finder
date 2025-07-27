@@ -1,10 +1,10 @@
 .ad-list-header {
     display: flex;
     justify-content: space-between;
-    align-items: stretch; /* <-- Stretch children to equal height */
+    align-items: stretch;
     gap: 2em;
     margin-bottom: 2em;
-    max-width: 1400px; /* wider block */
+    max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
@@ -73,8 +73,8 @@
 
 .ad-description {
     margin-bottom: 0.9em;
-    word-break: break-word;      /* ensures long words or URLs wrap */
-    overflow-wrap: anywhere;     /* wraps at any point if needed */
+    word-break: break-word;
+    overflow-wrap: anywhere;
     max-width: 100%;
     color: #b9b1a2;
     line-height: 1.5;
@@ -89,7 +89,7 @@
     margin-bottom: 2em;
     display: flex;
     gap: 1em;
-    align-items: stretch; /* <-- Children match height */
+    align-items: stretch;
 }
 
 .search-bar input[type="text"] {
@@ -105,7 +105,7 @@
     font-size: 1em;
     background: #ffffff;
     color: var(--text-dark);
-    height: 40px; /* <-- Match button height */
+    height: 40px;
     box-sizing: border-box;
 }
 
@@ -159,7 +159,7 @@
     border: none;
     font-weight: 600;
     font-size: 1em;
-    height: 40px;    /* <-- Fixed height for both buttons */
+    height: 40px;
     min-width: 120px;
     box-sizing: border-box;
 }

@@ -1,0 +1,112 @@
+{% extends 'common/base.html' %}
+{% block title %}{{ table.name }} | DungeonFinder{% endblock %}
+{% block content %}
+<section class="table-view-section">
+    <div class="table-block table-view-block">
+        <div class="table-header">
+            <h1>{{ table.name }}</h1>
+        </div>
+        {% if table.announcement %}
+            <div class="ad-block table-details-announcement">
+                <div class="announcement-title">
+                    <strong>Announcement:</strong><br>
+                </div>
+                <div class="announcement-content">
+                    {{ table.announcement|linebreaksbr }}
+                </div>
+            </div>
+        {% endif %}
+        <div class="table-main-content">
+            <div class="table-members ad-block table-members-section" style="flex:1;">
+                <h2>Members</h2>
+                <div class="members-list">
+                    <div class="member-block member-owner">
+                        <a href="{% url 'account_details' table.created_by.pk %}" target="_blank" rel="noopener" class="member-link">
+                            <img src="{{ table.created_by.profile.profile_pic.url }}" class="member-avatar" alt="{{ table.created_by.username }}">
+                            <span class="member-username">{{ table.created_by.username }}</span>
+                        </a>
+                        <span class="role-badge">Owner</span>
+                    </div>
+                    {% for admin in table.admins.all %}
+                        <div class="member-block member-admin">
+                            <a href="{% url 'account_details' admin.pk %}" target="_blank" rel="noopener" class="member-link">
+                                <img src="{{ admin.profile.profile_pic.url }}" class="member-avatar" alt="{{ admin.username }}">
+                                <span class="member-username">{{ admin.username }}</span>
+                            </a>
+                            <span class="role-badge">Admin</span>
+                        </div>
+                    {% empty %}
+                    {% endfor %}
+                    {% for member in table.members.all %}
+                        {% if member != table.created_by and member not in table.admins.all %}
+                            <div class="member-block member-member">
+                                <a href="{% url 'account_details' member.pk %}" target="_blank" rel="noopener" class="member-link">
+                                    <img src="{{ member.profile.profile_pic.url }}" class="member-avatar" alt="{{ member.username }}">
+                                    <span class="member-username">{{ member.username }}</span>
+                                </a>
+                                <span class="role-badge">Member</span>
+                            </div>
+                        {% endif %}
+                    {% empty %}
+                        <div class="member-block member-none" style="color: #b9b1a2;">
+                            No members yet.
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="ad-actions table-details-actions">
+                    {% if user.is_authenticated %}
+                        {% if user == table.created_by %}
+                            <a href="{% url 'manage_table' table.pk %}" class="btn btn-primary table-members-btn">Manage Table</a>
+                            <form method="post" action="#">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary table-members-btn">Delete Table</button>
+                            </form>
+                        {% elif user in table.admins.all %}
+                            <a href="{% url 'manage_table' table.pk %}" class="btn btn-primary table-members-btn">Manage Table</a>
+                            <form method="post" action="#">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary table-members-btn">Leave Table</button>
+                            </form>
+                        {% elif user in table.members.all %}
+                            <form method="post" action="#">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary table-members-btn">Leave Table</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="table-messages ad-block" style="flex:2;">
+                <h2>Messages</h2>
+                <ul>
+                    {% for message in table.messages.all %}
+                        <li>
+                            <strong>{{ message.sender.username }}</strong>
+                            <span style="color: #b9b1a2;">({{ message.sent_at|date:"M d, Y H:i" }})</span>
+                            <div>{{ message.content|linebreaksbr }}</div>
+                            {% if user.is_authenticated %}
+                                {% if message.sender == user or table.created_by == user or user in table.admins.all %}
+                                    <form method="post" action="#">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary">Delete</button>
+                                    </form>
+                                {% endif %}
+                            {% endif %}
+                        </li>
+                    {% empty %}
+                        <li style="color: #b9b1a2;">No messages yet.</li>
+                    {% endfor %}
+                </ul>
+                {% if user.is_authenticated and user in table.members.all %}
+                    <h3 style="color: var(--primary-accent);">Post a Message</h3>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -14,7 +14,6 @@ User = get_user_model()
 def create_profile_and_avatar(sender, instance, created, **kwargs):
     if created:
         profile = Profile.objects.create(user=instance)
-        # Save avatar in user-specific folder
         name = f"{instance.first_name}+{instance.last_name}"
         if not instance.first_name and not instance.last_name:
             name = instance.username
@@ -30,7 +29,6 @@ def create_profile_and_avatar(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=User)
 def delete_user_profile_pics_folder(sender, instance, **kwargs):
-    # Remove user's profile pics folder when the user is deleted
     user_folder = os.path.join(settings.MEDIA_ROOT, "profile_pics", str(instance.pk))
     if os.path.isdir(user_folder):
         shutil.rmtree(user_folder)

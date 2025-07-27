@@ -8,15 +8,14 @@ from ads.models import Ad
 from ad_applications.models import Application
 
 
-# Has been converted into a signal, executing upon Application Accept
+# Has been converted into a signal, executing upon Application Accept, kept for here just in case
 
 # class SendInvitationView(LoginRequiredMixin, View):
 #     def post(self, request, ad_id, application_id):
 #         ad = get_object_or_404(Ad, id=ad_id, owner=request.user)
 #         application = get_object_or_404(Application, id=application_id)
-#         receiver = application.owner  # Assuming Application has 'sender' field
+#         receiver = application.owner
 #
-#         # Create invitation (if not already exists)
 #         invitation, created = Invitation.objects.get_or_create(
 #             ad=ad,
 #             application=application,
@@ -24,7 +23,6 @@ from ad_applications.models import Application
 #             recipient=receiver,
 #             defaults={'status': 'pending'}
 #         )
-#         # Redirect to wherever you want (e.g., application review page)
 #         return redirect('application_details', pk=application.id)
 
 class AcceptInvitationView(LoginRequiredMixin, View):
@@ -34,13 +32,12 @@ class AcceptInvitationView(LoginRequiredMixin, View):
             invitation.status = 'accepted'
             invitation.responded_at = timezone.now()
             invitation.save()
-            # Add user to the table via the ad's table relation
             table = invitation.ad.table
-            table.members.add(request.user)  # Assumes table has a ManyToMany 'members' field
+            table.members.add(request.user)
             messages.success(request, "Invitation accepted.")
         else:
             messages.error(request, f"Invitation has already been {invitation.status}. You cannot change your response.")
-        return redirect('my_applications')  # Update to your redirect destination
+        return redirect('my_applications')
 
 class DeclineInvitationView(LoginRequiredMixin, View):
     def post(self, request, invitation_id):
@@ -52,4 +49,4 @@ class DeclineInvitationView(LoginRequiredMixin, View):
             messages.success(request, "Invitation declined.")
         else:
             messages.error(request, f"Invitation has already been {invitation.status}. You cannot change your response.")
-        return redirect('my_applications')  # Update to your redirect destination
+        return redirect('my_applications')

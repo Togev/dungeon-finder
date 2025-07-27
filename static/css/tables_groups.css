@@ -1,0 +1,135 @@
+.create-table-option {
+    text-align: right;
+    margin-bottom: 2em;
+}
+
+.table-header {
+    text-align: center;
+    color: var(--primary-accent);
+    font-size: 1.5em;
+}
+
+.table-details-announcement {
+    background: var(--background);
+    padding: 1.5em 2em;
+    border-radius: 6px;
+    margin-bottom: 1.5em;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+.announcement-title {
+    color: var(--primary-accent);
+}
+
+.announcement-content {
+    color: var(--text-light);
+}
+
+.table-main-content {
+    display: flex;
+    gap: 2.5em;
+}
+
+.table-main-content .ad-block {
+    padding-top: 0.5em;
+}
+
+.table-members h2,
+.table-messages h2 {
+    color: var(--primary-accent);
+}
+
+.table-members-section {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+}
+
+.members-list {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+.member-block {
+    display: flex;
+    align-items: center;
+    background: var(--primary-accent);
+    border-radius: 6px;
+    padding: 4px;
+}
+
+.member-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.member-block a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-light);
+    font-weight: bold;
+}
+
+.table-details-actions {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    margin-top: auto;
+}
+
+.member-username {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    max-width: 150px;
+}
+
+a.table-members-btn {
+    display: inline-block;
+    width: 160px;
+    min-height: 60px;
+    padding: 1.2em 1.2em;
+    text-align: center;
+    vertical-align: middle;
+    font: inherit;
+    background: var(--primary-accent);
+    color: var(--text-light);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    box-sizing: border-box;
+    text-decoration: none;
+    margin-top: 0.5em;
+}
+
+button.table-members-btn[type="submit"] {
+    display: inline-block;
+    width: 160px;
+    min-height: 60px;
+    padding: 0.8em 1.2em;
+    text-align: center;
+    vertical-align: middle;
+    font: inherit;
+    background: var(--primary-accent);
+    color: var(--text-light);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    box-sizing: border-box;
+    text-decoration: none;
+    margin-top: 0.5em;
+}
+
+.table-header,
+.ad-header {
+    font-size: inherit;
+}

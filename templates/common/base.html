@@ -16,7 +16,7 @@
                 <nav>
                     <a href="{% url 'my_ads' %}">My Ads</a>
                     <a href="{% url 'my_applications' %}">My Applications</a>
-                    <a href="#">My Tables</a>
+                    <a href="{% url 'my_tables' %}">My Tables</a>
                 </nav>
                 {% if not request.user.is_authenticated %}
                     <div class="auth-buttons">

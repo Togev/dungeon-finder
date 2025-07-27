@@ -6,7 +6,6 @@ from accounts.validators import UsernameAlphaNumericUnderscoreValidator
 from django.db import models
 
 
-# Create your models here.
 class CustomUser(AbstractUser):
     username = models.CharField(
     max_length=30,
