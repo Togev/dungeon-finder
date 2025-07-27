@@ -39,7 +39,7 @@ class UserDetailView(DetailView):
     model = User
     template_name = "accounts/account_details.html"
     context_object_name = "profile_user"
-    pk_url_kwarg = "pk"  # if your URL is accounts/<pk>/details
+    pk_url_kwarg = "pk"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -55,17 +55,15 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
     form_class = UserEditForm
     template_name = 'accounts/edit_profile.html'
     context_object_name = 'user_obj'
-    pk_url_kwarg = 'pk'   # Use <int:pk> in your URL
+    pk_url_kwarg = 'pk'
 
     def get_object(self, queryset=None):
         user_obj = get_object_or_404(User, pk=self.kwargs.get('pk'))
-        # Only allow the owner to edit their profile
         if self.request.user != user_obj:
             return HttpResponseForbidden("You do not have permission to edit this profile.")
         return user_obj
 
     def get_profile(self):
-        # Assumes Profile is created with user
         return self.get_object().profile
 
     def get_success_url(self) -> str:
@@ -90,14 +88,13 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
             user_form.save()
             profile_form.save()
             messages.success(request, "Your profile was updated successfully.")
-            return redirect('account_details', pk=self.object.pk)  # Replace with your details view name
+            return redirect('account_details', pk=self.object.pk)
         else:
             messages.error(request, "Please correct the errors below.")
             return self.render_to_response(self.get_context_data(user_form=user_form, profile_form=profile_form))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # user_form and profile_form are passed from get/post
         context.setdefault('user_form', kwargs.get('user_form'))
         context.setdefault('profile_form', kwargs.get('profile_form'))
         return context

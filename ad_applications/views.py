@@ -44,7 +44,6 @@ class ApplicationDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         application = context['application']
-        # Try to get the invitation for this application, if it exists
         invitation = Invitation.objects.filter(application=application).first()
         context['invitation'] = invitation
         return context
@@ -99,12 +98,11 @@ class MyApplicationsListView(LoginRequiredMixin, ListView):
         context['view_type'] = self.request.GET.get('type', 'sent')
         applications = context['applications']
 
-        # Attach invitation to each application
         for app in applications:
             app.invitation = Invitation.objects.filter(application=app).first()
 
         context['applications'] = applications
-        context['user'] = self.request.user  # Add current user to template context for recipient check
+        context['user'] = self.request.user
         return context
 
 

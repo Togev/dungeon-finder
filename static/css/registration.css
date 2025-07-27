@@ -83,7 +83,6 @@ input[type="submit"]:hover {
     color: #fff;
 }
 
-/* --- Remember Me Horizontal Layout --- */
 .remember-me-group {
     display: flex;
     align-items: center;

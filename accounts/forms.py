@@ -125,6 +125,6 @@ class ProfileEditForm(forms.ModelForm):
         model = Profile
         fields = ("phone_number", "address", "about_me", "profile_pic", "show_names")
         widgets = {
-            'profile_pic': forms.FileInput,  # This removes the "clear" checkbox!
+            'profile_pic': forms.FileInput,
         }
 

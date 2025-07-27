@@ -27,24 +27,21 @@ class CreateAdView(LoginRequiredMixin, CreateView):
 
         table = form.cleaned_data['table']
         new_name = form.cleaned_data.get('new_table_name')
-        new_desc = form.cleaned_data.get('new_table_description')
 
         if table == '__new__':
-            # Safe to assume both name and description are valid due to form validation
             table = Table.objects.create(
                 name=new_name,
-                description=new_desc,
                 created_by=self.request.user
             )
+            table.members.add(self.request.user)
 
-        form.instance.table = table  # Either the new one or existing instance
-
+        form.instance.table = table
         return super().form_valid(form)
 
 class EditAdView(LoginRequiredMixin, UpdateView):
     model = Ad
-    form_class = EditAdForm  # Or CreateAdForm if they're identical
-    template_name = 'ads/edit_ad.html'  # Reuse the same form template
+    form_class = EditAdForm
+    template_name = 'ads/edit_ad.html'
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -53,10 +50,8 @@ class EditAdView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('ad_details', args=[self.object.pk])
-    # Adjust to your ad listing url name
 
     def get_queryset(self):
-        # Optional: restrict editing so users can only edit their own ads
         return super().get_queryset().filter(owner=self.request.user)
 
 
@@ -68,7 +63,6 @@ class AdDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         ad = self.get_object()
-        # Check if the logged-in user has already applied
         user_application = Application.objects.filter(ad=ad, owner=self.request.user).first()
         context['user_application'] = user_application
         return context

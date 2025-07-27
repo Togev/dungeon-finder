@@ -1,0 +1,125 @@
+{% extends 'common/base.html' %}
+{% block title %}Manage Table | DungeonFinder{% endblock %}
+
+{% block content %}
+<section class="table-manage-section">
+    <div class="table-block table-manage-block">
+        <h1 class="table-manage-title">Manage Table</h1>
+        <form method="post" class="table-manage-form">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-row">
+                <label for="{{ form.name.id_for_label }}">Table Name</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="form-errors">{{ form.name.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-row">
+                <label for="{{ form.announcement.id_for_label }}">Announcement</label>
+                {{ form.announcement }}
+                {% if form.announcement.errors %}
+                    <div class="form-errors">{{ form.announcement.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-row">
+                <label for="{{ form.owner_color.id_for_label }}">Owner Color</label>
+                {{ form.owner_color }}
+                {% if form.owner_color.errors %}
+                    <div class="form-errors">{{ form.owner_color.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-row">
+                <label for="{{ form.admin_color.id_for_label }}">Admin Color</label>
+                {{ form.admin_color }}
+                {% if form.admin_color.errors %}
+                    <div class="form-errors">{{ form.admin_color.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-row">
+                <label for="{{ form.member_color.id_for_label }}">Member Color</label>
+                {{ form.member_color }}
+                {% if form.member_color.errors %}
+                    <div class="form-errors">{{ form.member_color.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-large">Save Changes</button>
+            </div>
+        </form>
+
+        <section class="table-members-section">
+            <h2 class="table-members-title">Members</h2>
+            <ul class="table-members-list">
+                {% for member in table.members.all %}
+                    <li class="table-member-item">
+                        {{ member.username }}
+                        {% if member == table.created_by %}
+                            <span class="role-label owner-label">Owner</span>
+                        {% elif member in table.admins.all %}
+                            <span class="role-label admin-label">Admin</span>
+                            {% if user == table.created_by %}
+                                <form method="post" action="#" class="inline-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-warning btn-sm">Demote</button>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                            {% if user == table.created_by %}
+                                <form method="post" action="#" class="inline-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-info btn-sm">Promote to Admin</button>
+                                </form>
+                            {% endif %}
+                        {% endif %}
+                        {% if user == table.created_by %}
+                            <form method="post" action="#" class="inline-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                            </form>
+                        {% elif user in table.admins.all %}
+                            {% if member not in table.admins.all and member != table.created_by %}
+                                <form method="post" action="#" class="inline-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                </form>
+                            {% endif %}
+                        {% endif %}
+                        {% if user == table.created_by and member != table.created_by %}
+                            <form method="post" action="#" class="inline-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-secondary btn-sm">Transfer Ownership</button>
+                            </form>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section class="danger-zone-section">
+            <h2 class="danger-zone-title">Danger Zone</h2>
+            {% if user == table.created_by %}
+                <form method="post" action="#">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-large">Delete Table</button>
+                </form>
+            {% else %}
+                <form method="post" action="#">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-large">Leave Table</button>
+                </form>
+            {% endif %}
+        </section>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'common/base.html' %}
+{% block title %}Create Table | DungeonFinder{% endblock %}
+
+{% block content %}
+<section class="ad-create-section">
+    <div class="ad-block ad-create-block">
+        <h1 class="ad-create-title">Create a New Table</h1>
+        <form method="post" class="ad-create-form">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-row">
+                <label for="{{ form.name.id_for_label }}">Name</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="form-errors">{{ form.name.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-row">
+                <label for="{{ form.announcement.id_for_label }}">Announcement</label>
+                {{ form.announcement }}
+                {% if form.announcement.errors %}
+                    <div class="form-errors">{{ form.announcement.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-large">Create Table</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

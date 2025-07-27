@@ -38,7 +38,6 @@ class Ad(models.Model):
             self.num_players = None
 
     def save(self, *args, **kwargs):
-        # Default title if blank
         if not self.title:
             self.title = f"{self.owner.username}'s ad"
         super().save(*args, **kwargs)

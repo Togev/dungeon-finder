@@ -16,7 +16,6 @@ def home(request):
         paginator = Paginator(ads, 5)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        # return the context as you do now, e.g.
         return render(request, 'ads/ad_list.html', {'page_obj': page_obj})
     else:
         recent_ads = Ad.objects.all().order_by('-created')[:3]

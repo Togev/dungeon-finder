@@ -6,7 +6,10 @@ class Table(models.Model):
     name = models.CharField(max_length=100,
                             validators=[MinLengthValidator(3)],
                             )
-    description = models.TextField(blank=True)
+    announcement = models.TextField(
+        blank=True,
+        help_text="Optional. This message will be shown at the top of the table for all members."
+    )
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -19,6 +22,21 @@ class Table(models.Model):
     admins = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         related_name='admin_tables'
+    )
+
+    owner_color = models.CharField(
+        max_length=7,
+        default="#e53935"
+    )
+
+    admin_color = models.CharField(
+        max_length=7,
+        default="#3949ab"
+    )
+
+    member_color = models.CharField(
+        max_length=7,
+        default="#43a047"
     )
 
     created_at = models.DateTimeField(auto_now_add=True)

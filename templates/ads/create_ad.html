@@ -79,7 +79,7 @@
                 {% endif %}
             </div>
             <div class="form-row">
-                <label for="{{ form.tags.id_for_label }}">Tags (up to 10, comma separated)</label>
+                <label for="{{ form.tags.id_for_label }}">Tags (up to 5, comma separated)</label>
                 {{ form.tags }}
                 {% if form.tags.errors %}
                     <div class="form-errors">{{ form.tags.errors }}</div>
@@ -114,13 +114,7 @@
                         <div class="form-errors">{{ form.new_table_name.errors }}</div>
                     {% endif %}
                 </div>
-                <div class="form-row">
-                    <label for="{{ form.new_table_description.id_for_label }}">New Table Group Description</label>
-                    {{ form.new_table_description }}
-                    {% if form.new_table_description.errors %}
-                        <div class="form-errors">{{ form.new_table_description.errors }}</div>
-                    {% endif %}
-                </div>
+
             </div>
 
             <div class="form-actions">
@@ -131,7 +125,6 @@
 </section>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Show/hide num_players row
         const lookingForPlayersCheckbox = document.getElementById('id_looking_for_players');
         const numPlayersRow = document.getElementById('num-players-row');
         function toggleNumPlayers() {
@@ -148,7 +141,6 @@
             lookingForPlayersCheckbox.addEventListener('change', toggleNumPlayers);
         }
 
-        // Table group new/create logic
         const tableSelect = document.getElementById('id_table_select');
         const newTableFields = document.getElementById('new-table-fields');
         function toggleNewTableFields() {

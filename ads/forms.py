@@ -13,7 +13,7 @@ class TableChoiceField(forms.ModelChoiceField):
 
     def validate(self, value):
         if value == '__new__':
-            return  # Allow special value
+            return
         super().validate(value)
 
 
@@ -67,34 +67,30 @@ class CreateAdForm(forms.ModelForm):
             )
         return value
 
-    def _validate_new_table_fields(self, new_name, new_desc):
+    def _validate_new_table_fields(self, new_name):
         if not new_name:
             self.add_error('new_table_name', "Please provide a name for the new Table Group.")
-        if not new_desc:
-            self.add_error('new_table_description', "Please provide a description for the new Table Group.")
         raise forms.ValidationError("You must provide details for a new Table Group.")
 
     def clean(self):
         cleaned_data = super().clean()
         table = cleaned_data.get('table')
         new_name = cleaned_data.get('new_table_name')
-        new_desc = cleaned_data.get('new_table_description')
 
         if self.no_existing_tables:
-            if not new_name or not new_desc:
-                self._validate_new_table_fields(new_name, new_desc)
+            if not new_name:
+                self._validate_new_table_fields(new_name)
         else:
             if table == '__new__':
-                if not new_name or not new_desc:
-                    self._validate_new_table_fields(new_name, new_desc)
+                if not new_name:
+                    self._validate_new_table_fields(new_name)
             else:
-                if new_name or new_desc:
+                if new_name:
                     self.add_error(
                         'table',
                         "You cannot select an existing Table Group and also provide details for a new one."
                     )
 
-        # Players/DM validation
         looking_for_players = cleaned_data.get('looking_for_players')
         looking_for_dm = cleaned_data.get('looking_for_dm')
         num_players = cleaned_data.get('num_players')
@@ -115,22 +111,20 @@ class CreateAdForm(forms.ModelForm):
 
     def clean_tags(self):
         tags = self.cleaned_data['tags']
-        if len(tags) > 10:
-            raise forms.ValidationError("You can add up to 10 tags only.")
+        if len(tags) > 5:
+            raise forms.ValidationError("You can add up to 5 tags only.")
         return tags
 
 class EditAdForm(CreateAdForm):
     def __init__(self, *args, **kwargs):
         kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
-        # Remove table-related fields for editing
         self.fields.pop('table', None)
         self.fields.pop('new_table_name', None)
         self.fields.pop('new_table_description', None)
 
     def clean(self):
-        cleaned_data = super(forms.ModelForm, self).clean()  # skip CreateAdForm.clean
-        # Only run the shared validation logic for player/DM fields & tags
+        cleaned_data = super(forms.ModelForm, self).clean()
         looking_for_players = cleaned_data.get('looking_for_players')
         looking_for_dm = cleaned_data.get('looking_for_dm')
         num_players = cleaned_data.get('num_players')
