@@ -7,17 +7,17 @@
 }
 
 .profile-details-card {
-    background: var(--card-bg);
+    background: var(--background);
     border-radius: 10px;
     box-shadow: 0 2px 16px rgba(0,0,0,0.08);
     padding: 2.5em 2em 2em 2em;
-    border: 1px solid var(--header-footer-bg-dark);
+    /*border: 1px solid var(--header-footer-bg-dark);*/
     display: flex;
     flex-direction: column;
     align-items: center;
     min-width: 350px;
     max-width: 450px;
-    margin: 2em; /* equal top & side margin */
+    margin: 2em;
 }
 
 .profile-picture-wrapper {
@@ -43,7 +43,6 @@
 
 
 .profile-main-info {
-    /*text-align: center;*/
     margin-bottom: 0.5em;
     width: 100%;
 }
@@ -117,7 +116,7 @@
 
 .profile-about-text {
     color: var(--text-light);
-    background: rgba(0,0,0,0.06);
+    background: var(--card-bg);
     padding: 0.6em 1em;
     border-radius: 6px;
     font-size: 1em;

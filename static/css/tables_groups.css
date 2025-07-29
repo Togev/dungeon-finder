@@ -41,9 +41,12 @@
 }
 
 .table-members-section {
+    flex: 0 0 40%;
+    min-width: 180px;
+    max-width: 400px;
+    height: 600px;
     display: flex;
     flex-direction: column;
-    height: 400px;
 }
 
 .members-list {
@@ -58,6 +61,11 @@
     background: var(--primary-accent);
     border-radius: 6px;
     padding: 4px;
+    margin-bottom: 0.5em;
+}
+
+.member-block:last-child {
+    margin-bottom: 0;
 }
 
 .member-avatar {
@@ -132,4 +140,265 @@ button.table-members-btn[type="submit"] {
 .table-header,
 .ad-header {
     font-size: inherit;
+}
+
+.table-manage-title,
+.table-members-title,
+.danger-zone-title {
+    color: var(--primary-accent);
+}
+
+.table-manage-section {
+    display: flex;
+    gap: 2.5em;
+    align-items: stretch;
+    justify-content: center;
+    margin: 2em auto;
+    flex-wrap: wrap;
+}
+
+.table-manage-block {
+    display: flex;
+    flex-direction: column;
+    /* If you want it to always match the side block */
+    flex: 1 1 440px;
+    min-width: 320px;
+    max-width: 520px;
+    background: var(--background);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(30,30,30,0.07);
+    padding: 0 2em 2em 2em;
+}
+
+.table-side-block {
+    flex: 1 1 350px;
+    min-width: 300px;
+    max-width: 470px;
+    background: var(--background);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(30,30,30,0.07);
+    padding: 0 2em 2em 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.table-manage-form {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+}
+
+.table-manage-form-actions {
+    margin-top: auto;
+}
+
+.form-row-color {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1em;
+    margin-bottom: 20px;
+}
+
+.form-row-color label {
+    display: inline-block;
+    width: 12ch;
+    font-weight: 500;
+    color: var(--secondary-accent);
+    font-size: 1.08em;
+}
+
+.form-row-color input[type="color"] {
+    width: 40px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: none;
+    padding: 0;
+    box-shadow: 0 0 2px rgba(0,0,0,0.1);
+    display: inline-block !important;
+}
+
+.form-row-table-announcement {
+    margin-bottom: 5px;
+}
+
+.btn-transfer,
+.btn-table-delete{
+    background: var(--primary-accent);
+    color: #fff;
+    display: block;
+    box-sizing: border-box;
+    font-weight: 600;
+    padding: 0.8em 2.2em;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.08em;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    margin-top: 0.5em;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+}
+
+.btn-transfer:hover {
+    background: var(--secondary-accent);
+    color: #fff;
+}
+
+.transfer-table-name, .transfer-future-owner {
+    color: var(--text-light);
+}
+
+.table-members-label {
+    font-weight: 500;
+    color: var(--secondary-accent);
+    font-size: 1.08em;
+    margin-bottom: 0.8em;
+}
+
+.table-members-dropdown {
+    background: var(--card-bg);
+    color: var(--text-light);
+    border: 1px solid #64542f;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 4px;
+    padding: 0.7em 1em;
+    font-size: 1em;
+    resize: vertical;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 1em;
+}
+
+.table-members-dropdown:focus,
+.table-members-dropdown:active {
+    border: 1px solid var(--primary-accent);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(100, 84, 47, 0.3);
+}
+
+.table-messages.ad-block {
+    flex: 1 1 60%;
+    min-width: 250px;
+    max-width: 1000px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+}
+
+.message-list-container {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    margin-bottom: 1em;
+}
+
+.message-form-container {
+    flex-shrink: 0;
+}
+
+.message-list, .table-messages ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.message-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5em;
+}
+.inline-message-delete-form {
+    display: flex;
+    margin-left: 0.5em;
+}
+.inline-message-delete-form .message-delete-btn {
+    width: auto !important;
+    min-height: unset !important;
+    padding: 0 0.5em 0 0 !important;
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    color: inherit !important;
+    font: inherit !important;
+    box-shadow: none !important;
+    text-align: left !important;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+.message-delete-btn .fa-trash{
+    color: var(--primary-accent);
+    padding: 0 !important;
+    font-size: 1.1em;
+    transition: color 0.2s;
+}
+.message-delete-btn:hover .fa-trash,
+.message-delete-btn:focus .fa-trash {
+    color: var(--secondary-accent);
+}
+.message-sender-name {
+    color: var(--primary-accent);
+}
+.message-time {
+    color: #b9b1a2;
+}
+.message-block-content {
+    border-radius: 6px;
+    background: var(--card-bg);
+    margin-bottom: 5px;
+    padding-left: 1em;
+    padding-bottom: 10px;
+}
+
+.message-form-container textarea {
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+    min-height: 60px;
+    font-size: 1em;
+    padding: 0.6em;
+    border-radius: 5px;
+    border: 1px solid #64542f;
+    background: var(--card-bg);
+    color: var(--text-light);
+}
+
+.message-form-container textarea:focus {
+    border-color: var(--primary-accent);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(100, 84, 47, 0.2);
+}
+
+.message-list-container::-webkit-scrollbar,
+.members-list::-webkit-scrollbar {
+    width: 10px;
+    background: var(--card-bg);
+    border-radius: 8px;
+}
+
+.message-list-container::-webkit-scrollbar-thumb,
+.members-list::-webkit-scrollbar-thumb {
+    background: var(--primary-accent);
+    border-radius: 8px;
+}
+
+.message-list-container::-webkit-scrollbar-thumb:hover,
+.members-list::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-accent);
+}
+
+.message-list-container,
+.members-list {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-accent) var(--card-bg);
 }

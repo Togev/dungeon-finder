@@ -10,20 +10,41 @@
     <a href="{% url 'registration' %}" class="btn btn-primary btn-large">Register Now</a>
 </section>
 
-<section class="recent-highlights" style="justify-content: center;">
-    <div class="highlight-block" style="max-width: 500px; width: 100%;">
-        <h2>Recent Ads</h2>
-        <ul>
-            {% for ad in recent_ads %}
-                <li>
-                    <a href="#">{{ ad.title }}</a>
-                    <span class="summary">{{ ad.summary }}</span>
-                </li>
-            {% empty %}
-                <li>No ads yet.</li>
-            {% endfor %}
-        </ul>
-        <a href="#" class="see-all">See all ads</a>
-    </div>
-</section>
+<div class="stats-row">
+  <div class="stat-block">
+    <h3>Browse our ads</h3>
+    <span class="stat-number" data-target="{{ ads_created }}">0</span>
+    <p class="stat-blurb">Ads Created</p>
+  </div>
+  <div class="stat-block">
+    <h3>Join for free</h3>
+    <span class="stat-number" data-target="{{ active_members }}">0</span>
+    <p class="stat-blurb">Active Members</p>
+  </div>
+  <div class="stat-block">
+    <h3>Organize your play</h3>
+    <span class="stat-number" data-target="{{ messages_sent }}">0</span>
+    <p class="stat-blurb">Messages Sent</p>
+  </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.stat-number').forEach(counter => {
+        const updateCount = () => {
+          const target = +counter.getAttribute('data-target');
+          const count = +counter.innerText;
+          const increment = Math.ceil(target / 100);
+
+          if (count < target) {
+            counter.innerText = count + increment;
+            setTimeout(updateCount, 20);
+          } else {
+            counter.innerText = target;
+          }
+        };
+        updateCount();
+      });
+    });
+</script>
 {% endblock %}

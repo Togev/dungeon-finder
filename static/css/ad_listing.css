@@ -96,17 +96,22 @@
     flex: 1 1 0;
     min-width: 50%;
     padding: 0.7em;
-    border-radius: 5px;
-    border: none;
+    border-radius: 6px;
+    border: 1px solid #64542f;;
     max-width: 700px;
     display: flex;
     gap: 1em;
     align-items: stretch;
     font-size: 1em;
-    background: #ffffff;
-    color: var(--text-dark);
+    background: var(--background);
+    color: var(--text-light);
     height: 40px;
     box-sizing: border-box;
+}
+
+.search-bar input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-accent);
 }
 
 .visually-hidden {
