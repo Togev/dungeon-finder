@@ -19,3 +19,5 @@ class ManageTableForm(forms.ModelForm):
             'admin_color': forms.TextInput(attrs={'type': 'color'}),
             'member_color': forms.TextInput(attrs={'type': 'color'}),
         }
+
+        

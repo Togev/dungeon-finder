@@ -1,0 +1,51 @@
+.stats-row {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0;
+  gap: 0;
+}
+
+.stat-block {
+  width: 33.3333%;
+  box-sizing: border-box;
+  background: var(--background);
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 0.5rem 1rem 0.5rem;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(57,73,171,0.07);
+  transition: transform 0.15s, box-shadow 0.15s;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.stat-block:not(:last-child) {
+  border-right: none;
+  margin-right: 2em;
+}
+
+.stat-block h3 {
+  margin-top: 0;
+  color: var(--primary-accent);
+  font-size: 1.3rem;
+}
+
+.stat-number {
+  font-size: 2.7rem;
+  font-weight: bold;
+  color: var(--primary-accent);
+  margin: 0 0 0.4rem 0;
+  display: block;
+}
+
+.stat-blurb {
+  color: var(--secondary-accent);
+  font-size: 1rem;
+  margin: 0;
+}

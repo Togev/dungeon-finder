@@ -21,7 +21,7 @@
                 {% endif %}
             </div>
 
-            <div class="form-row">
+            <div class="form-row form-row-table-announcement">
                 <label for="{{ form.announcement.id_for_label }}">Announcement</label>
                 {{ form.announcement }}
                 {% if form.announcement.errors %}
@@ -29,15 +29,15 @@
                 {% endif %}
             </div>
 
-            <div class="form-row">
+            <div class="form-row form-row-color">
                 <label for="{{ form.owner_color.id_for_label }}">Owner Color</label>
-                {{ form.owner_color }}
+                {{ form.owner_color.as_widget }}
                 {% if form.owner_color.errors %}
                     <div class="form-errors">{{ form.owner_color.errors }}</div>
                 {% endif %}
             </div>
 
-            <div class="form-row">
+            <div class="form-row form-row-color">
                 <label for="{{ form.admin_color.id_for_label }}">Admin Color</label>
                 {{ form.admin_color }}
                 {% if form.admin_color.errors %}
@@ -45,7 +45,7 @@
                 {% endif %}
             </div>
 
-            <div class="form-row">
+            <div class="form-row form-row-color">
                 <label for="{{ form.member_color.id_for_label }}">Member Color</label>
                 {{ form.member_color }}
                 {% if form.member_color.errors %}
@@ -53,73 +53,105 @@
                 {% endif %}
             </div>
 
-            <div class="form-actions">
+            <div class="form-actions table-manage-form-actions">
                 <button type="submit" class="btn btn-primary btn-large">Save Changes</button>
             </div>
         </form>
-
+    </div>
+    <div class="table-side-block">
         <section class="table-members-section">
-            <h2 class="table-members-title">Members</h2>
-            <ul class="table-members-list">
-                {% for member in table.members.all %}
-                    <li class="table-member-item">
-                        {{ member.username }}
-                        {% if member == table.created_by %}
-                            <span class="role-label owner-label">Owner</span>
-                        {% elif member in table.admins.all %}
-                            <span class="role-label admin-label">Admin</span>
-                            {% if user == table.created_by %}
-                                <form method="post" action="#" class="inline-form">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-warning btn-sm">Demote</button>
-                                </form>
-                            {% endif %}
-                        {% else %}
-                            {% if user == table.created_by %}
-                                <form method="post" action="#" class="inline-form">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-info btn-sm">Promote to Admin</button>
-                                </form>
-                            {% endif %}
+            <h2 class="table-members-title"> Manage Members</h2>
+            {% if user == table.created_by %}
+                <label for="memberDropdown" class="table-members-label">Select Member:</label>
+                <select id="memberDropdown" class="table-members-dropdown">
+                    <option value="" disabled selected>-- Select a member --</option>
+                    {% for member in table.members.all %}
+                        {% if member != table.created_by %}
+                            <option value="member-{{ member.pk }}">
+                                {{ member.username }}
+                                {% if member in table.admins.all %} (Admin){% else %} (Member){% endif %}
+                            </option>
                         {% endif %}
-                        {% if user == table.created_by %}
-                            <form method="post" action="#" class="inline-form">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-                            </form>
-                        {% elif user in table.admins.all %}
-                            {% if member not in table.admins.all and member != table.created_by %}
-                                <form method="post" action="#" class="inline-form">
+                    {% endfor %}
+                </select>
+                <div id="memberActionsContainer">
+                    {% for member in table.members.all %}
+                        {% if member != table.created_by %}
+                            <div class="member-actions-block"
+                                 id="member-{{ member.pk }}"
+                                 style="display: {% if forloop.first %}block{% else %}none{% endif %};">
+                                {% if member in table.admins.all %}
+                                    <form method="post" action="{% url 'table_demote_admin' table.pk member.pk %}" class="inline-form">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-warning btn-sm">Demote</button>
+                                    </form>
+                                {% else %}
+                                    <form method="post" action="{% url 'table_promote_admin' table.pk member.pk %}" class="inline-form">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-info btn-sm">Promote to Admin</button>
+                                    </form>
+                                {% endif %}
+                                <form method="post" action="{% url 'table_remove_member' table.pk member.pk %}" class="inline-form">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-danger btn-sm">Remove</button>
                                 </form>
-                            {% endif %}
+                                <a href="{% url 'table_transfer_ownership' table.pk member.pk %}" class="btn btn-warning btn-sm btn-transfer">
+                                  Transfer Ownership
+                                </a>
+                            </div>
                         {% endif %}
-                        {% if user == table.created_by and member != table.created_by %}
-                            <form method="post" action="#" class="inline-form">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-secondary btn-sm">Transfer Ownership</button>
-                            </form>
+                    {% endfor %}
+                </div>
+            {% elif user in table.admins.all %}
+                <label for="memberDropdown" class="table-members-label">Select Member:</label>
+                <select id="memberDropdown" class="table-members-dropdown">
+                    {% for member in table.members.all %}
+                        {% if member != table.created_by and member not in table.admins.all and member != user %}
+                            <option value="member-{{ member.pk }}">
+                                {{ member.username }} (Member)
+                            </option>
                         {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-        </section>
-
-        <section class="danger-zone-section">
-            <h2 class="danger-zone-title">Danger Zone</h2>
-            {% if user == table.created_by %}
-                <form method="post" action="#">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger btn-large">Delete Table</button>
-                </form>
-            {% else %}
-                <form method="post" action="#">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger btn-large">Leave Table</button>
-                </form>
+                    {% endfor %}
+                </select>
+                <div id="memberActionsContainer">
+                    {% for member in table.members.all %}
+                        {% if member != table.created_by and member not in table.admins.all and member != user %}
+                            <div class="member-actions-block"
+                                 id="member-{{ member.pk }}"
+                                 style="display: {% if forloop.first %}block{% else %}none{% endif %};">
+                                <strong>{{ member.username }}</strong>
+                                <span class="role-label member-label">Member</span>
+                                <form method="post" action="{% url 'table_remove_member' table.pk member.pk %}" class="inline-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             {% endif %}
         </section>
+
+        {% if user == table.created_by %}
+          <section class="danger-zone-section">
+            <h2 class="danger-zone-title">Table Actions</h2>
+            <a href="{% url 'table_delete' table.pk %}" class="btn btn-danger btn-large btn-table-delete">Delete Table</a>
+          </section>
+        {% endif %}
     </div>
-</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdown = document.getElementById('memberDropdown');
+    if (dropdown) {
+        const actionBlocks = document.querySelectorAll('.member-actions-block');
+        actionBlocks.forEach(block => block.style.display = 'none');
+        dropdown.addEventListener('change', function() {
+            actionBlocks.forEach(block => {
+                block.style.display = (block.id === dropdown.value) ? 'block' : 'none';
+            });
+        });
+    }
+});
+</script>
 {% endblock %}
