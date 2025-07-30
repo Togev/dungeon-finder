@@ -19,7 +19,6 @@ class CustomUser(AbstractUser):
 )
     age = models.PositiveIntegerField(
         validators=[MinValueValidator(18, message="You must be at least 18 years old to register.")],
-        default=18,
         help_text="You must be at least 18 years old to register.",
     )
 
