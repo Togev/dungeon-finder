@@ -214,3 +214,21 @@
     vertical-align: middle;
     margin: 0;
 }
+
+.delete-card-label {
+    max-width:430px;
+}
+
+.delete-card-p {
+    color: var(--primary-accent);
+    font-weight:600;
+    margin-bottom:1.1em;
+}
+
+.delete-card-actions {
+    margin-top:0.5em;
+}
+
+.edit-profile-header {
+    margin-bottom: 0.5em;
+}

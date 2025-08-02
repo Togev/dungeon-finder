@@ -402,3 +402,11 @@ button.table-members-btn[type="submit"] {
     scrollbar-width: thin;
     scrollbar-color: var(--primary-accent) var(--card-bg);
 }
+
+.member-none {
+    color: #b9b1a2;
+}
+
+.empty-messages-list {
+    color: #b9b1a2;
+}

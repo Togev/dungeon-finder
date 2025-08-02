@@ -32,11 +32,11 @@
             <div class="ad-actions">
                 {% if app.invitation %}
                     {% if app.invitation.status == 'pending' and app.invitation.recipient == user %}
-                        <form method="post" action="{% url 'accept_invitation' app.invitation.id %}" style="display:inline;">
+                        <form method="post" action="{% url 'accept_invitation' app.invitation.id %}" class="application-accept-form">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-success" id="details-view-btn">Accept</button>
                         </form>
-                        <form method="post" action="{% url 'decline_invitation' app.invitation.id %}" style="display:inline;">
+                        <form method="post" action="{% url 'decline_invitation' app.invitation.id %}" class="application-accept-form">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-danger" id="details-view-btn">Decline</button>
                         </form>
@@ -53,7 +53,7 @@
         </div>
     {% empty %}
         <div class="ad-block">
-            <p style="color: #b9b1a2; text-align: center;">
+            <p class="empty-applications-list-p">
                 {% if view_type == 'sent' %}
                     You haven't sent any applications yet.
                 {% else %}

@@ -129,3 +129,12 @@
     display: flex;
     gap: 1em;
 }
+
+.application-accept-form {
+    display:inline;
+}
+
+.empty-applications-list-p {
+    color: #b9b1a2;
+    text-align: center;
+}

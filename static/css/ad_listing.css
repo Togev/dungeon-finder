@@ -292,3 +292,7 @@
     font-weight: 600;
 }
 
+#new-table-fields {
+    display:none;
+}
+
