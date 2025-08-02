@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
 from django.contrib.auth import get_user_model
 
 from accounts.models import Profile
@@ -47,7 +47,7 @@ class UserRegistrationForm(UserCreationForm, BaseUserForm):
     password2 = forms.CharField(
         label="Password confirmation",
         widget=forms.PasswordInput(attrs={'placeholder': 'Repeat password'}),
-        help_text="Enter the same password as before, for verification."
+        help_text="Enter the same password as before."
     )
 
     class Meta(BaseUserForm.Meta):
@@ -128,3 +128,12 @@ class ProfileEditForm(forms.ModelForm):
             'profile_pic': forms.FileInput,
         }
 
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ("username", "email", "first_name", "last_name", "age")
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ("username", "email", "first_name", "last_name", "age", "is_staff", "is_superuser", "groups", "user_permissions")
