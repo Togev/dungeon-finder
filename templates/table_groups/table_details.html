@@ -45,7 +45,7 @@
                             </div>
                         {% endif %}
                     {% empty %}
-                        <div class="member-block member-none" style="color: #b9b1a2;">
+                        <div class="member-block member-none">
                             No members yet.
                         </div>
                     {% endfor %}
@@ -88,7 +88,7 @@
                                 <div>{{ message.content|linebreaksbr }}</div>
                             </li>
                         {% empty %}
-                            <li style="color: #b9b1a2;">No messages yet.</li>
+                            <li class="empty-messages-list">No messages yet.</li>
                         {% endfor %}
                     </ul>
                 </div>

@@ -1,16 +1,16 @@
 {% extends "common/base.html" %}
 {% block content %}
 <div class="profile-details-container">
-    <div class="profile-details-card" style="max-width:430px;">
-        <h2 class="profile-username" style="margin-bottom:0.9em;">Delete Table</h2>
-        <p class="delete-description">
+    <div class="profile-details-card delete-card-label">
+        <h2 class="profile-username delete-profile-card-header">Delete Table</h2>
+        <p class="delete-description delete-card-p">
             Are you sure you want to permanently delete this table?<br>
             This action cannot be undone.
         </p>
 
         <form method="post">
             {% csrf_token %}
-            <div class="profile-actions" style="margin-top:0.5em;">
+            <div class="profile-actions delete-card-actions">
                 <button type="submit" class="btn btn-danger">Delete Table</button>
                 <a href="{% url 'table_details' object.pk %}" class="btn btn-secondary">Cancel</a>
             </div>
