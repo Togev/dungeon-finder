@@ -1,7 +1,9 @@
 from django.urls import path, include
 import ad_applications.views
+from ad_applications.views import AjaxMyApplicationsView
 urlpatterns = [
     path('my_applications/', ad_applications.views.MyApplicationsListView.as_view(), name='my_applications'),
+    path('my_applications/ajax/', AjaxMyApplicationsView.as_view(), name='my_applications_ajax'),
     path('application_form/<int:ad_id>/', ad_applications.views.ApplicationCreateView.as_view(), name='application_form'),
     path('<int:pk>/application_details/', ad_applications.views.ApplicationDetailView.as_view(), name='application_details'),
     path('<int:pk>/application_delete/', ad_applications.views.ApplicationDeleteView.as_view(), name='application_delete'),

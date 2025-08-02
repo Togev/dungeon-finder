@@ -1,0 +1,66 @@
+{% for app in applications %}
+    <div class="ad-block">
+        <div class="ad-header">
+            <h2>{{ app.ad.title }}</h2>
+            <span class="ad-date">{{ app.submitted_at|date:"M d, Y" }}</span>
+        </div>
+        <div class="ad-meta">
+            {% if view_type == 'sent' %}
+                <span class="ad-creator"><strong>Recipient:</strong> {{ app.recipient.username }}</span>
+            {% else %}
+                <span class="ad-creator"><strong>From:</strong> {{ app.owner.username }}</span>
+            {% endif %}
+            <span><strong>Status:</strong> {{ app.get_status_display }}</span>
+            <span><strong>Role:</strong> {{ app.get_role_display }}</span>
+            <span class="ad-location"><strong>Location:</strong> {{ app.ad.location_type }}</span>
+        </div>
+        <div class="ad-description">
+            {{ app.message|truncatechars:220 }}
+        </div>
+        <div class="ad-actions">
+            {% if app.invitation %}
+                {% if app.invitation.status == 'pending' and app.invitation.recipient == user %}
+                    <form method="post" action="{% url 'accept_invitation' app.invitation.id %}" class="application-accept-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success" id="details-view-btn">Accept</button>
+                    </form>
+                    <form method="post" action="{% url 'decline_invitation' app.invitation.id %}" class="application-accept-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger" id="details-view-btn">Decline</button>
+                    </form>
+                {% else %}
+                    <span class="invitation-status">
+                        Invitation {{ app.invitation.status|capfirst }}
+                    </span>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'application_details' app.pk %}" class="btn btn-primary" id="details-view-btn">View Application</a>
+                <a href="{% url 'ad_details' app.ad.pk %}" class="btn btn-primary" id="details-view-btn">View Ad</a>
+            {% endif %}
+        </div>
+    </div>
+{% empty %}
+    <div class="ad-block">
+        <p class="empty-applications-list-p">
+            {% if view_type == 'sent' %}
+                You haven't sent any applications yet.
+            {% else %}
+                You haven't received any applications yet.
+            {% endif %}
+        </p>
+    </div>
+{% endfor %}
+
+<div class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="#" class="pagination-link" data-page="1" data-type="{{ view_type }}">&laquo; first</a>
+        <a href="#" class="pagination-link" data-page="{{ page_obj.previous_page_number }}" data-type="{{ view_type }}">previous</a>
+    {% endif %}
+
+    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+    {% if page_obj.has_next %}
+        <a href="#" class="pagination-link" data-page="{{ page_obj.next_page_number }}" data-type="{{ view_type }}">next</a>
+        <a href="#" class="pagination-link" data-page="{{ page_obj.paginator.num_pages }}" data-type="{{ view_type }}">last &raquo;</a>
+    {% endif %}
+</div>

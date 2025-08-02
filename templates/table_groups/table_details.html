@@ -94,7 +94,7 @@
                 </div>
                 {% if user.is_authenticated and user in table.members.all %}
                     <div class="message-form-container">
-                        <h3 style="color: var(--primary-accent);">Post a Message</h3>
+                        <h3 class="message-send-header">Post a Message</h3>
                         <form method="post" action="">
                             {% csrf_token %}
                             {{ form.as_p }}

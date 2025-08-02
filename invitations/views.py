@@ -4,26 +4,7 @@ from django.views import View
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Invitation
-from ads.models import Ad
-from ad_applications.models import Application
 
-
-# Has been converted into a signal, executing upon Application Accept, kept for here just in case
-
-# class SendInvitationView(LoginRequiredMixin, View):
-#     def post(self, request, ad_id, application_id):
-#         ad = get_object_or_404(Ad, id=ad_id, owner=request.user)
-#         application = get_object_or_404(Application, id=application_id)
-#         receiver = application.owner
-#
-#         invitation, created = Invitation.objects.get_or_create(
-#             ad=ad,
-#             application=application,
-#             sender=request.user,
-#             recipient=receiver,
-#             defaults={'status': 'pending'}
-#         )
-#         return redirect('application_details', pk=application.id)
 
 class AcceptInvitationView(LoginRequiredMixin, View):
     def post(self, request, invitation_id):
