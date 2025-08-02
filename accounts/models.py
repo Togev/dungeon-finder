@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinLengthValidator, MinValueValidator
 
 from django.conf import settings
+
+from accounts.managers import CustomUserManager
 from accounts.validators import UsernameAlphaNumericUnderscoreValidator
 from django.db import models
 
@@ -21,6 +23,8 @@ class CustomUser(AbstractUser):
         validators=[MinValueValidator(18, message="You must be at least 18 years old to register.")],
         help_text="You must be at least 18 years old to register.",
     )
+
+    objects = CustomUserManager()
 
     def __str__(self):
         return self.username

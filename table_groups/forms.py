@@ -20,4 +20,12 @@ class ManageTableForm(forms.ModelForm):
             'member_color': forms.TextInput(attrs={'type': 'color'}),
         }
 
-        
+class TableAdminForm(forms.ModelForm):
+    class Meta:
+        model = Table
+        fields = "__all__"
+        widgets = {
+            "owner_color": forms.TextInput(attrs={"type": "color"}),
+            "admin_color": forms.TextInput(attrs={"type": "color"}),
+            "member_color": forms.TextInput(attrs={"type": "color"}),
+        }
