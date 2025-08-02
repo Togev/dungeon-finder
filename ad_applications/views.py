@@ -1,5 +1,8 @@
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DetailView, ListView
@@ -105,4 +108,30 @@ class MyApplicationsListView(LoginRequiredMixin, ListView):
         context['user'] = self.request.user
         return context
 
+class AjaxMyApplicationsView(View):
+    def get(self, request):
+        view_type = request.GET.get('type', 'sent')
+        page_number = request.GET.get('page', 1)
+        user = request.user
 
+        if view_type == 'received':
+            qs = Application.objects.filter(recipient=user).order_by('-submitted_at')
+        else:
+            qs = Application.objects.filter(owner=user).order_by('-updated_at')
+
+        paginator = Paginator(qs, 5)
+        page_obj = paginator.get_page(page_number)
+
+        applications = list(page_obj.object_list)
+        for app in applications:
+            app.invitation = Invitation.objects.filter(application=app).first()
+
+        context = {
+            'applications': applications,
+            'page_obj': page_obj,
+            'view_type': view_type,
+            'user': user,
+        }
+
+        html = render_to_string('ad_applications/_application_list.html', context, request=request)
+        return JsonResponse({'html': html})

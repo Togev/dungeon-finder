@@ -410,3 +410,7 @@ button.table-members-btn[type="submit"] {
 .empty-messages-list {
     color: #b9b1a2;
 }
+
+.message-send-header {
+    color: var(--primary-accent);
+}
