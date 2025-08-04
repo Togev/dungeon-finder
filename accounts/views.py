@@ -23,7 +23,7 @@ class RegistrationView(CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
         user = form.instance
-        login(self.request, user)  # Automatically log in the newly created user
+        login(self.request, user)
         return response
 
 class CustomLoginView(LoginView):
@@ -52,7 +52,6 @@ class UserDetailView(DetailView):
         user = self.get_object()
         context['is_owner'] = self.request.user == user
         context['form'] = UserDetailForm(instance=user)
-        # Ensure profile exists (should with your signals)
         context['profile'] = getattr(user, 'profile', None)
         return context
 
