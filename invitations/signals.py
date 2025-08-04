@@ -3,6 +3,8 @@ from django.dispatch import receiver
 from ad_applications.models import Application
 from invitations.models import Invitation
 
+#   Triggers when an application is accepted
+
 @receiver(post_save, sender=Application)
 def send_invitation_on_acceptance(sender, instance, created, **kwargs):
     if instance.status == 'accepted':

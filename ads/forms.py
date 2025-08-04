@@ -21,16 +21,16 @@ class CreateAdForm(forms.ModelForm):
     table = TableChoiceField(
         queryset=Table.objects.none(),
         required=False,
-        label="Select an existing Table Group"
+        label="Select an existing Table"
     )
     new_table_name = forms.CharField(
         required=False,
-        label="New Table Group Name"
+        label="New Table Name"
     )
     new_table_description = forms.CharField(
         required=False,
         widget=forms.Textarea(attrs={'rows': 2}),
-        label="New Table Group Description"
+        label="New Table Description"
     )
 
     class Meta:
@@ -63,14 +63,14 @@ class CreateAdForm(forms.ModelForm):
         value = self.cleaned_data.get('table')
         if value is None:
             raise forms.ValidationError(
-                "You must select an existing Table Group or choose 'Create new table' and fill in its details."
+                "You must select an existing Table or choose 'Create new table' and fill in its details."
             )
         return value
 
     def _validate_new_table_fields(self, new_name):
         if not new_name:
-            self.add_error('new_table_name', "Please provide a name for the new Table Group.")
-        raise forms.ValidationError("You must provide details for a new Table Group.")
+            self.add_error('new_table_name', "Please provide a name for the new Table.")
+        raise forms.ValidationError("You must provide details for a new Table.")
 
     def clean(self):
         cleaned_data = super().clean()
@@ -88,7 +88,7 @@ class CreateAdForm(forms.ModelForm):
                 if new_name:
                     self.add_error(
                         'table',
-                        "You cannot select an existing Table Group and also provide details for a new one."
+                        "You cannot select an existing Table and also provide details for a new one."
                     )
 
         looking_for_players = cleaned_data.get('looking_for_players')
@@ -112,7 +112,7 @@ class CreateAdForm(forms.ModelForm):
     def clean_tags(self):
         tags = self.cleaned_data['tags']
         if len(tags) > 5:
-            raise forms.ValidationError("You can add up to 5 tags only.")
+            raise forms.ValidationError("You can not add more than 5 tags.")
         return tags
 
 class EditAdForm(CreateAdForm):
@@ -144,6 +144,6 @@ class EditAdForm(CreateAdForm):
 
     def clean_tags(self):
         tags = self.cleaned_data['tags']
-        if len(tags) > 10:
-            raise forms.ValidationError("You can add up to 10 tags only.")
+        if len(tags) > 5:
+            raise forms.ValidationError("You can not add more than 5 tags.")
         return tags

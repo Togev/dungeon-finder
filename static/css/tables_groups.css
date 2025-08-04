@@ -160,7 +160,6 @@ button.table-members-btn[type="submit"] {
 .table-manage-block {
     display: flex;
     flex-direction: column;
-    /* If you want it to always match the side block */
     flex: 1 1 440px;
     min-width: 320px;
     max-width: 520px;

@@ -9,7 +9,7 @@ User = get_user_model()
 
 class BaseUserForm(forms.ModelForm):
     username = forms.CharField(
-        help_text="Choose a unique username for logging in.",
+        help_text="Choose a unique username for your account.",
         widget=forms.TextInput(attrs={'placeholder': 'Username'})
     )
     email = forms.EmailField(

@@ -9,6 +9,7 @@ User = get_user_model()
 
 ADMIN_GROUP_NAMES = {'Full Admin', 'Staff Admin'}
 
+#   Triggers once migrations are made, creates admin groups
 
 @receiver(post_migrate)
 def create_admin_groups(sender, **kwargs):

@@ -9,7 +9,7 @@ from table_groups.models import Table
 from .models import Ad
 from .forms import CreateAdForm, EditAdForm
 
-# Ad List view is located in common/views as it affects which landing page is displayed if logged in
+# Ad List view is located in common/views as it affects which landing page is displayed if logged in or not
 
 class CreateAdView(LoginRequiredMixin, CreateView):
     model = Ad

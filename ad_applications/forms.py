@@ -10,6 +10,6 @@ class ApplicationCreateForm(forms.ModelForm):
             'message': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
         }
         labels = {
-            'role': "I'm looking to:",
+            'role': "I'm looking to be a...:",
             'message': "Tell us about yourself",
         }

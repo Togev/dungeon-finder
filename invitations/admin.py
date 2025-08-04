@@ -45,7 +45,6 @@ class InvitationAdmin(admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         ro = list(self.readonly_fields)
-        # After creation, these should never be changed
         if obj:
             ro += ["ad", "application", "sender", "recipient"]
         return ro

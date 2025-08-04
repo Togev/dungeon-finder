@@ -8,6 +8,8 @@ from .models import Profile
 import os
 import shutil
 
+#   Triggered on successful registration
+
 User = get_user_model()
 
 @receiver(post_save, sender=User)

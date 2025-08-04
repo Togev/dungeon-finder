@@ -1,4 +1,12 @@
-# Django Project Setup Guide
+# DungeonFinder
+
+DungeonFinder is a web app that helps users discover and manage their tabletop games and sessions.
+
+> **Note:** This project uses Django 5.2.4 and Python 3.12.
+
+> **External APIs ised:** UI-Avatars.com.
+
+# DungeonFinder Setup Guide
 
 ## 1. Clone the repo
 
@@ -10,8 +18,19 @@ cd dungeon-finder
 ## 2. Create virtual environment and install dependencies
 
 ```bash
+# Create virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Activate the virtual environment:
+# On macOS/Linux:
+source venv/bin/activate
+
+# On Windows (CMD):
+venv\Scripts\activate.bat
+
+# On Windows (PowerShell):
+venv\Scripts\Activate.ps1
+
 pip install -r requirements.txt
 ```
 
