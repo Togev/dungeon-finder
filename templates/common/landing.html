@@ -1,4 +1,5 @@
 {% extends 'common/base.html' %}
+{% load static %}
 {% block title %}Home | DungeonFinder{% endblock %}
 
 {% block content %}
@@ -27,24 +28,7 @@
     <p class="stat-blurb">Messages Sent</p>
   </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('.stat-number').forEach(counter => {
-        const updateCount = () => {
-          const target = +counter.getAttribute('data-target');
-          const count = +counter.innerText;
-          const increment = Math.ceil(target / 100);
-
-          if (count < target) {
-            counter.innerText = count + increment;
-            setTimeout(updateCount, 20);
-          } else {
-            counter.innerText = target;
-          }
-        };
-        updateCount();
-      });
-    });
-</script>
+{% block extra_scripts %}
+    <script src="{% static 'common/js/landing.js' %}"></script>
+{% endblock %}
 {% endblock %}

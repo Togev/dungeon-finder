@@ -1,4 +1,5 @@
 {% extends 'common/base.html' %}
+{% load static %}
 {% block title %}Edit Ad | DungeonFinder{% endblock %}
 
 {% block content %}
@@ -98,21 +99,7 @@
         </form>
     </div>
 </section>
-    
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const lookingForPlayersCheckbox = document.getElementById('id_looking_for_players');
-    const numPlayersRow = document.getElementById('num-players-row');
-
-    function toggleNumPlayers() {
-        if (lookingForPlayersCheckbox.checked) {
-            numPlayersRow.style.display = '';
-        } else {
-            numPlayersRow.style.display = 'none';
-        }
-    }
-    toggleNumPlayers();
-    lookingForPlayersCheckbox.addEventListener('change', toggleNumPlayers);
-});
-</script>
+{% block extra_scripts %}
+    <script src="{% static 'ads/js/edit_ad.js' %}"></script>
+{% endblock %}
 {% endblock %}

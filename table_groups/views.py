@@ -1,10 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
 from django.views import View
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, FormView, TemplateView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
 from django.views.generic.edit import FormMixin
 
 from accounts.models import CustomUser
@@ -46,10 +47,8 @@ class CreateTableView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('my_tables')
 
     def form_valid(self, form):
-        # Set creator as the current user
         form.instance.created_by = self.request.user
         response = super().form_valid(form)
-        # Add creator as a member (but not admin)
         self.object.members.add(self.request.user)
         return response
 
@@ -77,8 +76,12 @@ class TableDetailView(LoginRequiredMixin, FormMixin, DetailView):
             message.table = self.object
             message.sender = self.request.user
             message.save()
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'success': True})
             return super().form_valid(form)
         else:
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'errors': form.errors}, status=400)
             return self.form_invalid(form)
 
 class ManageTableView(LoginRequiredMixin, UpdateView):
@@ -217,7 +220,7 @@ class TableDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class TableLeaveView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     template_name = "table_groups/leave_table.html"
-    success_url = reverse_lazy("my_tables")  # Redirect wherever appropriate
+    success_url = reverse_lazy("my_tables")
 
     def dispatch(self, request, *args, **kwargs):
         self.table = get_object_or_404(Table, pk=kwargs['pk'])
@@ -244,3 +247,18 @@ class TableLeaveView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
         if user in table.members.all():
             table.members.remove(user)
         return redirect(self.success_url)
+
+class AjaxTableMessagesView(View):
+    def get(self, request, pk):
+        table = get_object_or_404(Table, pk=pk)
+        last_id = int(request.GET.get('after', 0))
+        new_messages = table.messages.filter(pk__gt=last_id).order_by('sent_at')
+
+        messages_html = render_to_string(
+            'table_groups/_message_list.html',
+            {'messages': new_messages, 'user': request.user, 'table': table},
+            request=request
+        )
+        highest_id = new_messages.last().pk if new_messages.exists() else last_id
+
+        return JsonResponse({'messages_html': messages_html, 'last_id': highest_id})
