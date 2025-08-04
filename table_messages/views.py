@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import HttpResponseNotAllowed
+from django.http import HttpResponseNotAllowed, JsonResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView
 
@@ -27,3 +27,12 @@ class TableMessageDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView
 
     def get(self, request, *args, **kwargs):
         return HttpResponseNotAllowed(['POST'])
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if not self.test_func():
+            return JsonResponse({'success': False, 'error': 'Permission denied.'}, status=403) if request.headers.get('x-requested-with') == 'XMLHttpRequest' else HttpResponseRedirect(self.get_success_url())
+        self.object.delete()
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': True})
+        return HttpResponseRedirect(self.get_success_url())

@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.core.exceptions import PermissionDenied
@@ -19,6 +19,12 @@ class RegistrationView(CreateView):
     form_class = UserRegistrationForm
     template_name = "accounts/registration_page.html"
     success_url = reverse_lazy('landing_page')  #  triggers signal to create Profile model related to User and assign default pic from ui-avatars.com
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        user = form.instance
+        login(self.request, user)  # Automatically log in the newly created user
+        return response
 
 class CustomLoginView(LoginView):
     form_class = CustomAuthenticationForm

@@ -1,0 +1,28 @@
+<ul class="message-list">
+    {% for message in messages %}
+        <li class="message-block-content" data-message-id="{{ message.pk }}">
+            <div class="message-meta">
+                <span>
+                    <strong class="message-sender-name">{{ message.sender.username }}</strong>
+                    <span class="message-time">({{ message.sent_at|date:"M d, Y H:i" }})</span>
+                </span>
+                {% if user.is_authenticated %}
+                    {% if message.sender == user or table.created_by == user or user in table.admins.all %}
+                        <form class="inline-message-delete-form"
+                              method="post"
+                              action="{% url 'delete_message' message.pk %}"
+                              data-message-id="{{ message.pk }}">
+                            {% csrf_token %}
+                            <button type="submit" class="message-delete-btn" title="Delete this message">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div>{{ message.content|linebreaksbr }}</div>
+        </li>
+    {% empty %}
+        <li class="empty-messages-list">No messages yet.</li>
+    {% endfor %}
+</ul>

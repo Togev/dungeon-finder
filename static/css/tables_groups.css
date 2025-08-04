@@ -414,3 +414,7 @@ button.table-members-btn[type="submit"] {
 .message-send-header {
     color: var(--primary-accent);
 }
+
+.danger-zone-section {
+    margin-top: auto;
+}
