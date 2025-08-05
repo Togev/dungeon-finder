@@ -28,5 +28,4 @@ def home(request):
             'ads_created': ads_created,
             'active_members': active_members,
             'messages_sent': messages_sent,
-            'blurb': "Welcome to RPG Ad Board! Post or find campaigns to join.",
         })
