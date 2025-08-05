@@ -170,28 +170,6 @@
     border-color: #90caf9;
 }
 
-
-@media (max-width: 600px) {
-    .profile-details-card {
-        min-width: unset;
-        max-width: 98vw;
-        padding: 1.2em 0.5em 1em 0.5em;
-        margin: 1em;
-    }
-    .profile-picture-wrapper {
-        width: 110px;
-        height: 110px;
-    }
-    .profile-picture {
-        width: 110px;
-        height: 110px;
-    }
-    .profile-about-text {
-        padding: 0.3em 0.6em;
-        font-size: 0.95em;
-    }
-}
-
 .profile-section-title {
     font-size: 1.14em;
     font-weight: 600;

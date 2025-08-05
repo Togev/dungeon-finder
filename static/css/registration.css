@@ -104,8 +104,3 @@ input[type="submit"]:hover {
     letter-spacing: 0.03em;
 }
 
-@media (max-width: 600px) {
-    .register-form-wrapper {
-        padding: 1.2em 0.7em;
-    }
-}
